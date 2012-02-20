@@ -1,0 +1,371 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib
+END
+maven-artifact-manager-2.0.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/maven-artifact-manager-2.0.2.jar
+END
+mahout-collections-0.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/mahout-collections-0.3.jar
+END
+plexus-container-default-1.0-alpha-9.jar
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/plexus-container-default-1.0-alpha-9.jar
+END
+lucene-benchmark-2.9.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/lucene-benchmark-2.9.1.jar
+END
+maven-plugin-api-2.0.6.jar
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/maven-plugin-api-2.0.6.jar
+END
+jets3t-0.7.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/jets3t-0.7.1.jar
+END
+httpunit.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/httpunit.jar
+END
+objenesis-1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/objenesis-1.2.jar
+END
+xstream-1.3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/xstream-1.3.1.jar
+END
+cglib-nodep-2.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/cglib-nodep-2.2.jar
+END
+commons-digester-1.7.jar
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-digester-1.7.jar
+END
+lucene-demos-2.9.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/lucene-demos-2.9.1.jar
+END
+lucene-analyzers-2.9.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/lucene-analyzers-2.9.1.jar
+END
+file-management-1.2.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/file-management-1.2.1.jar
+END
+commons-httpclient-3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-httpclient-3.1.jar
+END
+uncommons-maths-1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/uncommons-maths-1.2.jar
+END
+wagon-provider-api-1.0-alpha-6.jar
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/wagon-provider-api-1.0-alpha-6.jar
+END
+hbase-0.20.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/hbase-0.20.0.jar
+END
+junit-4.7.jar
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/junit-4.7.jar
+END
+slf4j-jcl-1.5.8.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/slf4j-jcl-1.5.8.jar
+END
+log4j-1.2.14.jar
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/log4j-1.2.14.jar
+END
+commons-math-1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-math-1.2.jar
+END
+easymockclassextension-2.5.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/easymockclassextension-2.5.2.jar
+END
+log4j-1.2.15.jar
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/log4j-1.2.15.jar
+END
+oro-2.0.8.jar
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/oro-2.0.8.jar
+END
+gson-1.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/gson-1.3.jar
+END
+mahout-examples-0.3.job
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/mahout-examples-0.3.job
+END
+lucene-core-2.9.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/lucene-core-2.9.1.jar
+END
+mahout-examples-0.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/mahout-examples-0.3.jar
+END
+google-collections-1.0-rc2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/google-collections-1.0-rc2.jar
+END
+commons-cli-2.0-mahout.jar
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-cli-2.0-mahout.jar
+END
+lucene-highlighter-2.9.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/lucene-highlighter-2.9.1.jar
+END
+maven-shared-io-1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/maven-shared-io-1.1.jar
+END
+watchmaker-swing-0.6.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/watchmaker-swing-0.6.2.jar
+END
+hadoop-core-0.20.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/hadoop-core-0.20.2.jar
+END
+easymock-2.5.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/easymock-2.5.2.jar
+END
+commons-cli-1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-cli-1.2.jar
+END
+classworlds-1.1-alpha-2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/classworlds-1.1-alpha-2.jar
+END
+commons-dbcp-1.2.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-dbcp-1.2.2.jar
+END
+mahout-core-0.3.job
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/mahout-core-0.3.job
+END
+mahout-core-0.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/mahout-core-0.3.jar
+END
+commons-pool-1.4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-pool-1.4.jar
+END
+mahout-math-0.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/mahout-math-0.3.jar
+END
+watchmaker-framework-0.6.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/watchmaker-framework-0.6.2.jar
+END
+plexus-utils-1.5.6.jar
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/plexus-utils-1.5.6.jar
+END
+lucene-wikipedia-2.9.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/lucene-wikipedia-2.9.1.jar
+END
+commons-codec-1.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-codec-1.3.jar
+END
+commons-collections-3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-collections-3.1.jar
+END
+lucene-memory-2.9.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/lucene-memory-2.9.1.jar
+END
+mysql-connector-java-5.0.8-bin.jar
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/mysql-connector-java-5.0.8-bin.jar
+END
+xml-apis-1.0.b2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/xml-apis-1.0.b2.jar
+END
+mahout-utils-0.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/mahout-utils-0.3.jar
+END
+commons-lang-2.4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-lang-2.4.jar
+END
+commons-logging-1.1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-logging-1.1.1.jar
+END
+maven-artifact-2.0.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/maven-artifact-2.0.2.jar
+END
+maven-repository-metadata-2.0.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/maven-repository-metadata-2.0.2.jar
+END
+velocity-1.5.jar
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/velocity-1.5.jar
+END
+xpp3_min-1.1.4c.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/xpp3_min-1.1.4c.jar
+END
+javaee-api-5.0-1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/javaee-api-5.0-1.jar
+END
+commons-beanutils-1.7.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/commons-beanutils-1.7.0.jar
+END
+slf4j-api-1.5.8.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mashups/!svn/ver/6/Recommender/WebContent/WEB-INF/lib/slf4j-api-1.5.8.jar
+END
