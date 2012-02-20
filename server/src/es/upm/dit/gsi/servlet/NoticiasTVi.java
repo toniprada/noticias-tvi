@@ -76,8 +76,7 @@ public class NoticiasTVi extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			PrintWriter out =res.getWriter();
-			String identifier = req.getParameter(Constants.IDENTIFIER);
-			Long userId = Users.getUserId(identifier);
+			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 			Integer max = Constants.MAX_RECOM_PARAM;
 			if (userId !=null){
 				List<RecommendedItem> recommendations = recommender.recommend(userId, max);
@@ -129,8 +128,7 @@ public class NoticiasTVi extends HttpServlet {
 		float estimation;
 		try {
 			PrintWriter out =res.getWriter();
-			String identifier = req.getParameter(Constants.IDENTIFIER);
-			Long userId = Users.getUserId(identifier);
+			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 			Integer max = Constants.MAX_RECOM_PARAM;
 			if (userId !=null){
 				for (int i = 0; i < Contents.getNumContents(); i++){
@@ -248,8 +246,7 @@ public class NoticiasTVi extends HttpServlet {
 		PrintWriter out =res.getWriter();
 		HashMap<String, Content> offer = new HashMap<String, Content>();
 		HashMap<String, Integer> preferences = new HashMap<String, Integer>();
-		String identifier = req.getParameter(Constants.IDENTIFIER);
-		Long userId = Users.getUserId(identifier);
+		Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 		Vector<Long> contentsId = Contents.getContentsIds();
 		for (int i=0; i<contentsId.size(); i++){
 			String id = contentsId.get(i).toString();
@@ -323,16 +320,15 @@ public class NoticiasTVi extends HttpServlet {
 	private void setPreference(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException{
 		try {
-			String nameOfUser = req.getParameter(Constants.IDENTIFIER);
-			Long userId = Users.introduceUser(nameOfUser);
+			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 			Long contentId = Long.parseLong(req.getParameter(Constants.CONTENT));
 			String nameOfContent = Contents.getTitleOfContent(contentId);
 			float preference = new Float(req.getParameter(Constants.PREFERENCE_PARAM));
 			if (Preference.userHaveContent(userId, contentId)){
 				dataModel.removePreference(userId, contentId);
-				LOGGER.info("El usuario " + nameOfUser  + " ha modificado la valoración del contenido " + nameOfContent + " a " +preference);
+				LOGGER.info("El usuario " + Users.getnameOfUser(userId)  + " ha modificado la valoración del contenido " + nameOfContent + " a " +preference);
 			} else {
-				LOGGER.info("El usuario " + nameOfUser  + " añade un valoración de " + preference + " al contenido " + nameOfContent);
+				LOGGER.info("El usuario " + Users.getnameOfUser(userId)  + " añade un valoración de " + preference + " al contenido " + nameOfContent);
 			}
 			dataModel.setPreference(userId, contentId, preference);
 		} catch (Exception e) {
@@ -352,14 +348,13 @@ public class NoticiasTVi extends HttpServlet {
 	 */
 	private void removePreference(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 		try {
-			String nameOfUser = req.getParameter(Constants.IDENTIFIER);
-			Long userId = Users.getUserId(nameOfUser);
+			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 			Long contentId = Long.parseLong(req.getParameter(Constants.CONTENT));
 			String nameOfContent = Contents.getTitleOfContent(contentId);
 			if (userId != null && contentId != null){
 				if (Preference.userHaveContent(userId, contentId) == true){
 					dataModel.removePreference(userId, contentId);
-					LOGGER.info("Eliminamos la valoración del usuario " + nameOfUser + " para el contenido " + nameOfContent);
+					LOGGER.info("Eliminamos la valoración del usuario " + Users.getnameOfUser(userId) + " para el contenido " + nameOfContent);
 				}
 			} else {
 				LOGGER.warning("Usuario o objeto no encontrado");
@@ -397,7 +392,7 @@ public class NoticiasTVi extends HttpServlet {
 	 */
 	private void removeUser(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 		try {
-			Preference.removePreferencesUser(Users.getUserId(req.getParameter(Constants.NAME_USER)));
+			Preference.removePreferencesUser(Long.parseLong(req.getParameter(Constants.IDENTIFIER)));
 			Users.removeUser(req.getParameter(Constants.NAME_USER));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -413,13 +408,12 @@ public class NoticiasTVi extends HttpServlet {
 	 * @throws ServletException si se produce algún error
 	 * @throws IOException si se produce algún error
 	 */
-	private void getContentsFromUser(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	private void getFavorites(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try{
-			String nameOfUser= req.getParameter (Constants.IDENTIFIER);
-			Long userId = Users.getUserId(nameOfUser);
+			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 			PrintWriter out =res.getWriter();
 			if (userId != null){
-				LOGGER.info("Los contenidos valorados por el usuario " + nameOfUser + " son:");
+				LOGGER.info("Los contenidos valorados por el usuario " + Users.getnameOfUser(userId) + " son:");
 				PreferenceArray preferencesUser = dataModel.getPreferencesFromUser(userId);
 				out.print("[");
 				for (int i=0; i<preferencesUser.length(); i++){
@@ -455,15 +449,21 @@ public class NoticiasTVi extends HttpServlet {
 	 * @throws ServletException si se produce algún error
 	 * @throws IOException si se produce algún error
 	 */
-	private void getRatingOfUserToContent (HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	private void getaaaa (HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try{
 			PrintWriter out =res.getWriter();
-			String nameOfUser= req.getParameter (Constants.IDENTIFIER);
-			String nameOfContent= req.getParameter (Constants.CONTENT);
-			Long userId = Users.getUserId(nameOfUser);
-			Long contentId = Contents.getContentId(nameOfContent);
+			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
+			Long contentId = Long.parseLong(req.getParameter(Constants.CONTENT));
 			if (userId != null){
-				if (Preference.userHaveContent(userId, contentId)){
+				PreferenceArray preferencesUser = dataModel.getPreferencesFromUser(userId);
+				if (preferencesUser.hasPrefWithItemID(contentId))
+					LOGGER.info("Ha sido puntuado");
+				else
+					LOGGER.info("No ha sido puntado");
+			
+				
+				
+			/*	if (Preference.userHaveContent(userId, contentId)){
 					out.print("[");
 					float rating = dataModel.getPreferenceValue(userId, contentId);
 					LOGGER.info("La valoración al contenido " +nameOfContent+" por el usuario " + nameOfUser + " es:" +rating);
@@ -472,6 +472,7 @@ public class NoticiasTVi extends HttpServlet {
 				} else {
 					LOGGER.warning("El usuario no ha valorado el contenido");
 				}
+				*/
 			} else {
 				LOGGER.warning("Usuario no encontrado");
 			}
@@ -562,10 +563,10 @@ public class NoticiasTVi extends HttpServlet {
 			newUser(req, res);
 		} else if (req.getParameter("action").equals("removeUser")){
 			removeUser(req, res);
-		} else if (req.getParameter("action").equals("getRatingOfUserToContent")) {
-			getRatingOfUserToContent(req, res);
-		} else if (req.getParameter("action").equals("getContentsFromUser")) {
-			getContentsFromUser(req, res);
+		} else if (req.getParameter("action").equals("getPrueba")) {
+			getaaaa(req, res);
+		} else if (req.getParameter("action").equals("getFavorites")) {
+			getFavorites(req, res);
   		} else if (req.getParameter("action").equals("setData")){
   			setData(req, res);
   		} 
