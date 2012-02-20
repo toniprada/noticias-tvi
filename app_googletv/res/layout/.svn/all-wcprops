@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/36/trunk/noticiastvi/res/layout
+END
+account_add_dialog.xml
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/19/trunk/noticiastvi/res/layout/account_add_dialog.xml
+END
+account_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/18/trunk/noticiastvi/res/layout/account_row.xml
+END
+main.xml
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/18/trunk/noticiastvi/res/layout/main.xml
+END
+account.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/19/trunk/noticiastvi/res/layout/account.xml
+END
+gallery_cell.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/36/trunk/noticiastvi/res/layout/gallery_cell.xml
+END
+fragment.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/26/trunk/noticiastvi/res/layout/fragment.xml
+END
+player.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/36/trunk/noticiastvi/res/layout/player.xml
+END
+gridview_cell.xml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/36/trunk/noticiastvi/res/layout/gridview_cell.xml
+END

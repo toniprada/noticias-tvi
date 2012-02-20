@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/35/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/fragment
+END
+NewFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/37/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/fragment/NewFragment.java
+END
+StreamFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/37/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/fragment/StreamFragment.java
+END
+FavoriteFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/37/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/fragment/FavoriteFragment.java
+END
+ParrillaFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/37/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/fragment/ParrillaFragment.java
+END
+PopularFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/37/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/fragment/PopularFragment.java
+END
+RecommendationFragment.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/37/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/fragment/RecommendationFragment.java
+END
+FragmentTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/37/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/fragment/FragmentTab.java
+END
