@@ -1,40 +1,0 @@
-10
-
-dir
-41
-http://usuario@lab.gsi.dit.upm.es/svn/mashups/Recommender/WebContent/build/classes/es/upm/dit/gsi
-http://usuario@lab.gsi.dit.upm.es/svn/mashups
-
-
-
-2010-11-11T17:48:26.337036Z
-6
-adri
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-53b011e0-facb-442a-a1ff-ae44e789d963
-
-logger
-dir
-
-test
-dir
-
-jdbc
-dir
-
-servlet
-dir
-
