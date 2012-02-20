@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/35/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/thread
+END
+NewThread.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/37/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/thread/NewThread.java
+END
+FavoriteThread.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/38/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/thread/FavoriteThread.java
+END
+GetItemsThread.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/38/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/thread/GetItemsThread.java
+END
+ParrillaThread.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/38/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/thread/ParrillaThread.java
+END
+PopularThread.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/38/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/thread/PopularThread.java
+END
+RecommendationThread.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/38/trunk/noticiastvi/src/es/upm/dit/gsi/noticiastvi/gtv/thread/RecommendationThread.java
+END

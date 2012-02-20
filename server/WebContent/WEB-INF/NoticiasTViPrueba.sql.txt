@@ -1,0 +1,152 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.1.37-1ubuntu5.5
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema NoticiasTVi
+--
+
+CREATE DATABASE IF NOT EXISTS NoticiasTVi;
+USE NoticiasTVi;
+
+--
+-- Definition of table `NoticiasTVi`.`contents`
+--
+
+DROP TABLE IF EXISTS `NoticiasTVi`.`contents`;
+CREATE TABLE  `NoticiasTVi`.`contents` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` tinytext NOT NULL,
+  `video` text NOT NULL,
+  `capture` text NOT NULL,
+  `date` tinytext NOT NULL,
+  `content` longtext NOT NULL,
+  `author` tinytext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `NoticiasTVi`.`contents`
+--
+
+/*!40000 ALTER TABLE `contents` DISABLE KEYS */;
+LOCK TABLES `contents` WRITE;
+INSERT INTO `NoticiasTVi`.`contents` VALUES  (1,'Las preguntas, con megáfonos','/elmundo/videos/2011/11/09/espana/1320878161_extras_video.flv','http://estaticos.elmundo.es/elmundo/videos/2011/11/09/espana/1320878161_extras_video_7.jpg','10/11/2011 08:30','El PSOE denuncia en un nuevo vídeo que Mariano Rajoy no contesta a nada','Manuel Sánchez'),
+ (2,'Miradas al fresco','/elmundo/videos/2011/11/09/ocio/1320843697_extras_video.flv','http://estaticos.elmundo.es/elmundo/imagenes/2011/11/09/ocio/1320843697_g_1.jpg','10/11/2011 05:05','Adentrarse en la exposición \'El Barroco. Teatro de las pasiones\' no es sólo ver un \'ribera\', un \'giordano\' o un \'reni\'. Unas obras, además, que habitualmente están encerradas en un palacio privado de Venecia, el mismo que acogió en su día el taller de Tiziano','Virginia Hernández'),
+ (3,'Prohíben el acceso','/elmundo/videos/2011/11/09/espana/1320862573_extras_video.flv','http://estaticos.elmundo.es/elmundo/imagenes/2011/11/09/espana/1320862573_g_0.jpg','09/11/2011 20:05','Las calas de Tacorón y Puerto Naos, al sur de la isla del Hierro han sido cerradas al público. El Plan de Protección Civil por Riesgo Volcánico de Canarias (Pevolca) ha tomado la decisión tras recibir los informes científicos pertinentes','Luigi Benedicto Borges'),
+ (4,'Romario','/elmundo/videos/2011/11/09/espana/1320862573_extras_video.flv','http://estaticos03.cache.el-mundo.net/america/imagenes/2011/10/18/deportes/1318964294_0.jpg','18/10/2011 14:58','El ex futbolista brasileño Romario dijo este martes que el argentino Lionel Messi, jugador del Barcelona español, puede aprender algunas cosas si ve los vídeos que le prometió Pelé.','Efe');
+INSERT INTO `NoticiasTVi`.`contents` VALUES  (5,'\'Tuiteando\' su propia boda','http://www.youtube.com/embed/mLXD1vjAXw4','','07/11/2011 17:20 ','Podría haber salido de una película, pero probablemente lo habríamos considerado demasiado exagerado: la novia se saca el móvil del escote y empieza a escribir mensajes mientras se está casando.','Pablo Pardo'),
+ (6,'Los mejores bármanes de España se citan en Valencia','/elmundo/videos/2011/11/10/valencia/1320910557_extras_video.flv','http://estaticos.elmundo.es/elmundo/imagenes/2011/11/10/valencia/1320910557_g_0.jpg','10/11/2011 08:48 ','El Campeonato Nacional de Coctelería reunirá a 16 jefes de bar y a otros tantos jóvenes bármanes de varias comunidades, que presentarán sus creaciones en el marco del 58 Congreso Nacional de Coctelería, donde los expertos analizarán y darán a conocer las nuevas tendencias del mercado de este tipo de bebida.','Efe'),
+ (7,'Ray Loriga se adentra en la literatura juvenil con \'El Bebedor de Lágrimas\'','/elmundo/videos/2011/11/09/paisvasco/1320868014_extras_video.flv','http://estaticos.elmundo.es/elmundo/videos/2011/11/09/paisvasco/1320868014_extras_video_8.jpg','09/11/2011 20:55','Todo comienza cuando Adela, una estudiante becada, llega a la universidad de Carnwell, deseosa de tomar las riendas de su vida y llegar a ser la persona que siempre quiso ser. Lo que se encontrará allí, sin embargo, será una leyenda y una maldición extrañas que terminarán por atraparla en una trama de asesinatos que deberá investigar el agente Warden pero que tienen bastante de sobrenatural.','Beatriz Rucabado'),
+ (8,'Los mejores videojuegos del año, premiados en Bilbao','/elmundo/videos/2011/11/09/paisvasco/1320856990_extras_video.flv','http://estaticos.elmundo.es/elmundo/videos/2011/11/09/paisvasco/1320856990_extras_video_6.jpg','09/11/2011 17:50','La gala de los mejores videojuegos del año se celebra estos días en Bilbao. Es el Fan & Serious Game Festival, que premia a los juegos de ocio y a los formativos más importantes del momento.','Atlas');
+INSERT INTO `NoticiasTVi`.`contents` VALUES  (9,'Las instituciones unifican el sistema de evaluación de daños por las lluvias','/elmundo/videos/2011/11/09/paisvasco/1320851978_extras_video.flv','http://estaticos.elmundo.es/elmundo/videos/2011/11/09/paisvasco/1320851978_extras_video_7.jpg','09/11/2011 17:09 ','El Gobierno Vasco, la Diputación de Gipuzkoa y los municipios afectados por las inundaciones del pasado fin de semana han unificado este miércoles el sistema de información y evaluación de daños, con el fin de disponer de una valoración concreta y global de los efectos de las riadas.','Atlas'),
+ (10,'La Policía salva la vida de una familia a punto de fallecer por \'muerte dulce\'','/elmundo/videos/2011/11/08/madrid/1320742027_extras_video.flv','http://estaticos.elmundo.es/elmundo/videos/2011/11/08/madrid/1320742027_extras_video_3.jpg','08/11/2011 17:30','La Policía salva la vida de una familia a punto de fallecer por \'muerte dulce\'','Efe'),
+ (11,'Morante se fuma un puro','/elmundo/videos/2011/11/09/andalucia_sevilla/1320869289_extras_video.flv','http://estaticos.elmundo.es/elmundo/imagenes/2011/11/10/andalucia_sevilla/1320869289_g_0.jpg','10/11/2011 08:26','Hay pocas cosas más estéticas que todo cuanto rodea al mundo del toro. Del campo a la plaza, pasando por el mito que acarrea la última generación de toreros-héroes de masas, todo es plástica en un mundo que, en muchas ocasiones, justifica en esta cuestión parte de su existencia.','Efe');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `contents` ENABLE KEYS */;
+
+
+--
+-- Definition of table `NoticiasTVi`.`preferenceTable`
+--
+
+DROP TABLE IF EXISTS `NoticiasTVi`.`preferenceTable`;
+CREATE TABLE  `NoticiasTVi`.`preferenceTable` (
+  `user_id` bigint(20) NOT NULL,
+  `content_id` bigint(20) NOT NULL,
+  `preference` float NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `NoticiasTVi`.`preferenceTable`
+--
+
+/*!40000 ALTER TABLE `preferenceTable` DISABLE KEYS */;
+LOCK TABLES `preferenceTable` WRITE;
+INSERT INTO `NoticiasTVi`.`preferenceTable` VALUES  (1,2,4),
+ (1,4,5),
+ (1,7,2),
+ (1,10,4),
+ (1,8,3),
+ (2,3,3),
+ (2,1,4),
+ (2,10,2),
+ (2,3,5),
+ (3,4,1),
+ (3,7,5),
+ (3,1,4),
+ (4,6,5),
+ (4,2,2),
+ (4,5,4),
+ (4,11,5),
+ (4,7,4),
+ (5,5,5),
+ (5,11,5),
+ (5,8,3),
+ (6,9,5),
+ (6,3,4),
+ (6,7,4),
+ (6,1,3),
+ (7,10,3),
+ (7,5,2),
+ (7,2,5),
+ (7,4,4),
+ (7,11,3),
+ (8,9,4),
+ (8,8,5),
+ (8,6,5),
+ (8,2,3);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `preferenceTable` ENABLE KEYS */;
+
+
+--
+-- Definition of table `NoticiasTVi`.`users`
+--
+
+DROP TABLE IF EXISTS `NoticiasTVi`.`users`;
+CREATE TABLE  `NoticiasTVi`.`users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `identifier` tinytext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `NoticiasTVi`.`users`
+--
+
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+LOCK TABLES `users` WRITE;
+INSERT INTO `NoticiasTVi`.`users` VALUES  (1,'adri'),
+ (2,'Carlos'),
+ (3,'Toni'),
+ (4,'Jose'),
+ (5,'Lourdes'),
+ (6,'Tamara'),
+ (7,'Aida'),
+ (8,'Ivan');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
