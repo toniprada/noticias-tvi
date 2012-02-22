@@ -77,6 +77,7 @@ public class NoticiasTVi extends HttpServlet {
 		try {
 			PrintWriter out =res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
+			LOGGER.info("El usuario es: " +Users.getnameOfUser(userId));
 			Integer max = Constants.MAX_RECOM_PARAM;
 			if (userId !=null){
 				List<RecommendedItem> recommendations = recommender.recommend(userId, max);
@@ -126,6 +127,7 @@ public class NoticiasTVi extends HttpServlet {
 		HashMap<Long, Float> recommendationSocial = new HashMap<Long, Float>();
 		float estimationSocial;
 		float estimation;
+		float rate;
 		try {
 			PrintWriter out =res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
@@ -158,8 +160,14 @@ public class NoticiasTVi extends HttpServlet {
 					}	
 				}
 				for (int m = 0; m < max ; m++) {
+					if (dataModel.getPreferenceValue(userId, keys[m])!=null)
+						rate = dataModel.getPreferenceValue(userId, keys[m]);
+					else
+						rate=0;
+					
 					out.print("{'nombre':'"+Contents.getTitleOfContent(keys[m]));
 					out.print("','estimacion':'"+values[m]);
+					out.print("','rate':'"+rate);
 					out.print("','video':'"+Contents.getVideoOfContent(keys[m]));
 					out.print("','captura':'"+Contents.getCaptureOfContent(keys[m]));
 					out.print("','fecha':'"+Contents.getDateOfContent(keys[m]));
@@ -188,8 +196,10 @@ public class NoticiasTVi extends HttpServlet {
 	 * @throws IOException si se produce algún error
 	 */
 	private void getPopular (HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+		float rate;
 		try {
 			PrintWriter out =res.getWriter();
+			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 			int popular = Constants.NUM_POPULAR;
 			out.print("[");
 			HashMap<Long, Float> averageRatings = Preference.averageRatings();
@@ -217,8 +227,13 @@ public class NoticiasTVi extends HttpServlet {
 				}
 			}
 			for (int j=0; j<popular; j++){
+				if (dataModel.getPreferenceValue(userId, id[j])!=null)
+					rate = dataModel.getPreferenceValue(userId, id[j]);
+				else
+					rate=0;
+				
 				out.print("{'nombre':'"+Contents.getTitleOfContent(id[j]));
-				out.print("','id':'"+id[j]);
+				out.print("','rate':'"+rate);
 				out.print("','video':'"+Contents.getVideoOfContent(id[j]));
 				out.print("','captura':'"+Contents.getCaptureOfContent(id[j]));
 				out.print("','fecha':'"+Contents.getDateOfContent(id[j]));
@@ -287,12 +302,20 @@ public class NoticiasTVi extends HttpServlet {
 	 * @throws IOException si se produce algún error
 	 */
 	private void getNews (HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+		float rate;
 		try{
 			PrintWriter out =res.getWriter();
+			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 			long [] ids = Contents.getMoreRecients(Constants.MAX_RECOM_PARAM);
 			out.print("[");
 			for (int k=0; k<ids.length; k++){
+				if (dataModel.getPreferenceValue(userId, ids[k])!=null)
+					rate = dataModel.getPreferenceValue(userId, ids[k]);
+				else
+					rate=0;
+				
 				out.print("{'nombre':'"+Contents.getTitleOfContent(ids[k]));
+				out.print("','rate':'"+rate);
 				out.print("','video':'"+Contents.getVideoOfContent(ids[k]));
 				out.print("','captura':'"+Contents.getCaptureOfContent(ids[k]));
 				out.print("','fecha':'"+Contents.getDateOfContent(ids[k]));
@@ -375,7 +398,9 @@ public class NoticiasTVi extends HttpServlet {
 	 */
 	private void newUser(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 		try {
+			PrintWriter out =res.getWriter();
 			Users.introduceUser(req.getParameter(Constants.NAME_USER));
+			out.print("Bienvenido a NoticiasTVi");
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -392,8 +417,10 @@ public class NoticiasTVi extends HttpServlet {
 	 */
 	private void removeUser(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 		try {
+			PrintWriter out =res.getWriter();
 			Preference.removePreferencesUser(Long.parseLong(req.getParameter(Constants.IDENTIFIER)));
-			Users.removeUser(req.getParameter(Constants.NAME_USER));
+			Users.removeUser(Long.parseLong(req.getParameter(Constants.IDENTIFIER)));
+			out.print("Su proceso de baja en el servicio ha sido tramitado");
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -419,6 +446,7 @@ public class NoticiasTVi extends HttpServlet {
 				for (int i=0; i<preferencesUser.length(); i++){
 					String content = Contents.getTitleOfContent(preferencesUser.getItemID(i));
 					float value = preferencesUser.getValue(i);
+					
 					LOGGER.info("Contenido: "+content+". Valoración: " +value);
 					out.print("{'nombre':'"+content);
 					out.print("','id':'"+preferencesUser.getItemID(i));
@@ -449,30 +477,21 @@ public class NoticiasTVi extends HttpServlet {
 	 * @throws ServletException si se produce algún error
 	 * @throws IOException si se produce algún error
 	 */
-	private void getaaaa (HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	private void getRatingOfContent (HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try{
 			PrintWriter out =res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 			Long contentId = Long.parseLong(req.getParameter(Constants.CONTENT));
 			if (userId != null){
-				PreferenceArray preferencesUser = dataModel.getPreferencesFromUser(userId);
-				if (preferencesUser.hasPrefWithItemID(contentId))
-					LOGGER.info("Ha sido puntuado");
-				else
-					LOGGER.info("No ha sido puntado");
-			
-				
-				
-			/*	if (Preference.userHaveContent(userId, contentId)){
+				if (Preference.userHaveContent(userId, contentId)){
 					out.print("[");
 					float rating = dataModel.getPreferenceValue(userId, contentId);
-					LOGGER.info("La valoración al contenido " +nameOfContent+" por el usuario " + nameOfUser + " es:" +rating);
+					LOGGER.info("La valoración al contenido " +Contents.getTitleOfContent(contentId)+" por el usuario " + Users.getnameOfUser(userId) + " es:" +rating);
 					out.print(rating);
 					out.print("]");
 				} else {
 					LOGGER.warning("El usuario no ha valorado el contenido");
 				}
-				*/
 			} else {
 				LOGGER.warning("Usuario no encontrado");
 			}
@@ -563,8 +582,8 @@ public class NoticiasTVi extends HttpServlet {
 			newUser(req, res);
 		} else if (req.getParameter("action").equals("removeUser")){
 			removeUser(req, res);
-		} else if (req.getParameter("action").equals("getPrueba")) {
-			getaaaa(req, res);
+		} else if (req.getParameter("action").equals("getRatingOfContent")) {
+			getRatingOfContent(req, res);
 		} else if (req.getParameter("action").equals("getFavorites")) {
 			getFavorites(req, res);
   		} else if (req.getParameter("action").equals("setData")){

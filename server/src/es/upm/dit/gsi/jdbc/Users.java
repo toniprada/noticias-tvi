@@ -65,13 +65,13 @@ public class Users {
 	 * 
 	 * @param nameOfUser
 	 */
-	public static void removeUser (String nameOfUser){
+	public static void removeUser (Long userId){
 		try {
-			String selectStatement = "DELETE FROM users WHERE identifier=?";
+			String selectStatement = "DELETE FROM users WHERE id=?";
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
-			prepStmt.setString(1, nameOfUser);
+			prepStmt.setLong(1, userId);
+			LOGGER.info("Se ha dado de baja el usuario: "+getnameOfUser(userId));
 	    	prepStmt.execute();
-	    	LOGGER.info("Se ha dado de baja el usuario: "+nameOfUser);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    }
