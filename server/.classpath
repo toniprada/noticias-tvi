@@ -13,5 +13,11 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/adri/Downloads/mahout-distribution-0.4/mahout-utils-0.4.jar"/>
+	<classpathentry kind="lib" path="/home/adri/Downloads/mahout-distribution-0.4/mahout-math-0.4.jar"/>
+	<classpathentry kind="lib" path="/home/adri/Downloads/mahout-distribution-0.4/mahout-examples-0.4-job.jar"/>
+	<classpathentry kind="lib" path="/home/adri/Downloads/mahout-distribution-0.4/mahout-examples-0.4.jar"/>
+	<classpathentry kind="lib" path="/home/adri/Downloads/mahout-distribution-0.4/mahout-core-0.4-job.jar"/>
+	<classpathentry kind="lib" path="/home/adri/Downloads/mahout-distribution-0.4/mahout-core-0.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

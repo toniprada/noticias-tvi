@@ -30,9 +30,7 @@ public class Data {
 		Users.introduceUser("Ivan");
 		
 		LOGGER.info("Datos de contenidos y usuarios introducidos en la base de datos");
-	}
-	
-	
+	}	
 
 }
 

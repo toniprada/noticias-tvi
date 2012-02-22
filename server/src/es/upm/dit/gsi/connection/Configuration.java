@@ -12,12 +12,18 @@ public class Configuration {
 	private Connection dbCon;
 	private MysqlDataSource dataSource;
 	private static Configuration conf;
-	public static String url = "jdbc:mysql://localhost:3306/NoticiasTVi";
+	/*public static String url = "jdbc:mysql://localhost:3306/NoticiasTVi";
 	public static String driver = "com.mysql.jdbc.Driver";
 	public static String servername = "localhost";
 	public static String dbname = "NoticiasTVi";
 	public static String user = "noticiasu";
-	public static String pass = "noticiasp";
+	public static String pass = "noticiasp";*/
+	public static String url = "jdbc:mysql://shannon.gsi.dit.upm.es/adri_db1";
+	public static String driver = "com.mysql.jdbc.Driver";
+	public static String servername = "shannon.gsi.dit.upm.es";
+	public static String dbname = "adri_db1";
+	public static String user = "adri";
+	public static String pass = "K7BEZQNncEHNnvcp";
 	
 	private static final Logger LOGGER = Logger.getLogger("connection.Configuration");
 	
