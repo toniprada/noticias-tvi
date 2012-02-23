@@ -12,7 +12,7 @@ public class Configuration {
 	private Connection dbCon;
 	private MysqlDataSource dataSource;
 	private static Configuration conf;
-	public static String url = "http://lab.gsi.dit.upm.es/NoticiasTVI";
+	public static String url = "jdbc:mysql://shannon.gsi.dit.upm.es:3306/adri_db1";
 	public static String driver = "com.mysql.jdbc.Driver";
 	public static String servername = "shannon.gsi.dit.upm.es";
 	public static String dbname = "adri_db1";
@@ -86,8 +86,11 @@ public class Configuration {
 	 */
 	public void setDbCon(String url, String user, String pass){
 		try {
+			System.out.println("Hola");
 			dbCon= DriverManager.getConnection(url, user, pass);
+			System.out.println("Adiós");
 		} catch (SQLException e) {
+			System.out.println("Dolorr");
 			e.printStackTrace();
 		}
 	}

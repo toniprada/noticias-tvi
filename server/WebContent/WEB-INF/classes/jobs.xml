@@ -28,7 +28,7 @@
 	            <name>SimpleTrigger</name>
 	            <job-name>GetContentJob</job-name>
 	            <repeat-count>-1</repeat-count> <!-- repeat indefinitely  -->
-	            <repeat-interval>60000</repeat-interval>  <!--  every 60 seconds -->
+	            <repeat-interval>300000</repeat-interval>  <!--  every 30 minutes -->
 	        </simple>
 	    </trigger>
 	    

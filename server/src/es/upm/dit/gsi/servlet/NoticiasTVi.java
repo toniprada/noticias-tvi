@@ -103,7 +103,6 @@ public class NoticiasTVi extends HttpServlet {
 					else 
 						out.print("'}]");
 				}
-				//out.print("])");
 			} else {
 				LOGGER.warning("No se puede dar recomendación ya que no existe el usuario"); 
 			}
@@ -563,7 +562,7 @@ public class NoticiasTVi extends HttpServlet {
 	 */
    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("Esperando respuesta");
-		res.setCharacterEncoding("UTF-8");
+		//res.setCharacterEncoding("UTF-8");
 		if (req.getParameter("action").equals("getRecommendation")) {
 			getRecommendation(req, res);
 		} else if (req.getParameter("action").equals("getRecommendationSocial")) {
