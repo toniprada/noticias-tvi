@@ -35,15 +35,16 @@ import com.example.google.tv.leftnavbar.LeftNavBar;
 import com.example.google.tv.leftnavbar.LeftNavBarService;
 
 import es.upm.dit.gsi.noticiastvi.gtv.account.Account;
+import es.upm.dit.gsi.noticiastvi.gtv.account.AccountActivity;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.FavoriteFragment;
-import es.upm.dit.gsi.noticiastvi.gtv.fragment.NewFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.ParrillaFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.PopularFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.RecommendationFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.util.CustomPreferenceManager;
 
 /**
- * Main activity
+ * Entry point activity.
+ * Shows the accounts dialogs and the content fragments.
  * 
  * @author Antonio Prada <toniprada@gmail.com>
  * 
@@ -61,7 +62,7 @@ public class NoticiasTVIActivity extends Activity {
 //    private ActionBar mBar;
     private CustomPreferenceManager mPreferences;
     private Account mAccount;
-    private boolean initialized = false;
+//    private boolean initialized = false;
     
     private LeftNavBar mLeftNavBar;
 
@@ -197,7 +198,7 @@ public class NoticiasTVIActivity extends Activity {
     }
     
 	private void showAccounts() {
-		Intent intent = new Intent(this, AccountsActivity.class);
+		Intent intent = new Intent(this, AccountActivity.class);
 		startActivityForResult(intent, R.layout.account);
 	}
 	

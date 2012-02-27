@@ -43,12 +43,13 @@ import android.widget.Toast;
 import android.widget.VideoView;
 import es.upm.dit.gsi.noticiastvi.gtv.account.Account;
 import es.upm.dit.gsi.noticiastvi.gtv.adapter.GalleryAdapter;
-import es.upm.dit.gsi.noticiastvi.gtv.item.FavoriteThread;
+import es.upm.dit.gsi.noticiastvi.gtv.item.SetRemoveFavoriteThread;
 import es.upm.dit.gsi.noticiastvi.gtv.item.Item;
 import es.upm.dit.gsi.noticiastvi.gtv.item.ItemList;
 
 /**
- * Video Player that shows info, a rating bar, etc
+ * Video player activity.
+ * It also shows additional info, has rating capabilities, etc
  * 
  * @author Antonio Prada <toniprada@gmail.com>
  * 
@@ -254,19 +255,18 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 		String action;
 		final boolean remove;
 		if (mStar.isChecked()) {
-			action = FavoriteThread.REMOVE;
+			action = SetRemoveFavoriteThread.REMOVE;
 			remove = true;
 		} else {
-			action = FavoriteThread.SET;
+			action = SetRemoveFavoriteThread.SET;
 			remove = false;
 		
 		}
 		Handler handler = new Handler() {
-    		@SuppressWarnings("unchecked")
 			@Override
     		public void handleMessage(Message msg) {
     			switch(msg.what) {
-    			case FavoriteThread.RESULT_OK:
+    			case SetRemoveFavoriteThread.RESULT_OK:
     				if (remove) {
     					mStar.setChecked(false);
     					if (!mInfoPanel.isVisible()) {
@@ -283,14 +283,14 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
     					}
     				}
     				break;
-    			case FavoriteThread.RESULT_ERROR:
+    			case SetRemoveFavoriteThread.RESULT_ERROR:
     				Toast.makeText(mContext,
 							getText(R.string.error_favorite),
 							Toast.LENGTH_SHORT).show();
     			}
     		}
     	};
-    	FavoriteThread favoriteThread = new FavoriteThread(handler, mAccount.getName(),  mItemList.getSelectedItem().getId(), action);
+    	SetRemoveFavoriteThread favoriteThread = new SetRemoveFavoriteThread(handler, mAccount.getName(),  mItemList.getSelectedItem().getId(), action);
     	favoriteThread.start();
 	}
 	
@@ -443,10 +443,11 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 			enabled = true;
 		}
 		
-		public void disable() {
-			hide();
-			enabled = false;
-		}
+		// ENABLE & DISABLE IS FOR TEXT NEWS
+//		public void disable() {
+//			hide();
+//			enabled = false;
+//		}
 		
 		public boolean handleKey(int keyCode) {
 			if (!enabled) {

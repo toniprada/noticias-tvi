@@ -22,18 +22,25 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Database of accounts.
+ * 
+ * @author Antonio Prada <toniprada@gmail.com>
+ * 
+ */
 public class DatabaseAdapter {
 	
-	private static final int DB_VERSION = 1;
+	private static final int DB_VERSION = 2;
 	private static final String DB_TABLE = "user";
 	private static final String DB_NAME = "login";
 	private static final String DB_CREATE = "create table " + DB_TABLE + " ( "
-			+ Account.ID + " integer primary key autoincrement" + ", "
+			+ Account.ID + " integer primary key" + ", "
 			+ Account.NAME + " text not null " + " );";
 
 	private Context context;
 	private SQLiteDatabase database;
 	private DatabaseHelper dbHelper;
+
 
 	private class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -110,8 +117,8 @@ public class DatabaseAdapter {
 	 * @return the row ID of the newly inserted row, or -1 if an error occurred 
 	 * 
 	 */
-	public int createUser(String username) {
-		ContentValues initialValues = createContentValues(username);
+	public int createUser(String username, int id) {
+		ContentValues initialValues = createContentValues(username, id);
 		return (int) database.insert(DB_TABLE, null, initialValues);
 	}
 
@@ -122,13 +129,13 @@ public class DatabaseAdapter {
 	 *            Column id.
 	 * @return if deleted
 	 */
-	public boolean deleteUser(long rowId) {
-		return database.delete(DB_TABLE, Account.ID + "=" + rowId, null) > 0;
+	public boolean deleteUser(int id) {
+		return database.delete(DB_TABLE, Account.ID + "=" + id, null) > 0;
 	}
 
-	public boolean updateUserTable(long rowId, String name) {
-		ContentValues updateValues = createContentValues(name);
-		return database.update(DB_TABLE, updateValues, Account.ID + "=" + rowId,
+	public boolean updateUserTable(int id, String name) {
+		ContentValues updateValues = createContentValues(name, id);
+		return database.update(DB_TABLE, updateValues, Account.ID + "=" + id,
 				null) > 0;
 	}
 
@@ -160,19 +167,19 @@ public class DatabaseAdapter {
 //		return myCursor;
 //	}
 
-	/**
-	 * Returns the table details given a row id.
-	 * 
-	 * @param rowId
-	 *            The table row id.
-	 * @return
-	 * @throws SQLException
-	 */
-	public Cursor fetchUserById(long rowId) throws SQLException {
-		return database.query(DB_TABLE, new String[] { Account.ID,
-				 Account.NAME}, Account.ID + "=" + rowId, null, null,
-				null, null);
-	}
+//	/**
+//	 * Returns the table details given a row id.
+//	 * 
+//	 * @param rowId
+//	 *            The table row id.
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public Cursor fetchUserById(long rowId) throws SQLException {
+//		return database.query(DB_TABLE, new String[] { Account.ID,
+//				 Account.NAME}, Account.ID + "=" + rowId, null, null,
+//				null, null);
+//	}
 
 	/**
 	 * Stores the username and password upon creation of new login details.
@@ -183,9 +190,10 @@ public class DatabaseAdapter {
 	 *            The password.
 	 * @return The entered values.
 	 */
-	private ContentValues createContentValues(String username) {
+	private ContentValues createContentValues(String username, int id) {
 		ContentValues values = new ContentValues();
 		values.put(Account.NAME, username);
+		values.put(Account.ID, id);
 		return values;
 	}
 }

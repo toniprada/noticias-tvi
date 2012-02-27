@@ -31,7 +31,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,7 +39,7 @@ import es.upm.dit.gsi.noticiastvi.gtv.item.Video;
 import es.upm.dit.gsi.noticiastvi.gtv.util.Constant;
 
 /**
- * Get the list of videos
+ * Get a list of items. Abstract class.
  * 
  * @author Antonio Prada <toniprada@gmail.com>
  * 
@@ -114,7 +113,6 @@ public abstract class GetItemsThread extends Thread {
 	public abstract HttpGet getRequest();
 
 	private ArrayList<Video> getTestVideos() {
-		// TODO Get videos:
 		ArrayList<Video> videos = new ArrayList<Video>();
 		videos
 		.add(new Video(

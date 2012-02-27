@@ -150,7 +150,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class string {
         public static final int about=0x7f070014;
-        public static final int about_message=0x7f070016;
+        public static final int about_messagecreating_=0x7f070016;
         public static final int about_text=0x7f070015;
         public static final int added_favorite=0x7f070010;
         public static final int app_name=0x7f070001;
@@ -158,7 +158,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int are_you_sure_delete_finish=0x7f07000c;
         public static final int change_user=0x7f070018;
         public static final int choose_user=0x7f07000a;
+        public static final int creating_user=0x7f07001d;
         public static final int deleted_favorite=0x7f070011;
+        public static final int deleting_user=0x7f07001e;
+        public static final int error_create_user=0x7f07001c;
         public static final int error_favorite=0x7f07001b;
         public static final int favorites=0x7f07001a;
         public static final int getting_videos=0x7f070006;

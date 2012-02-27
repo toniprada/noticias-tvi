@@ -1,0 +1,11 @@
+<modify-entry
+   cachable-props="svn:special svn:externals svn:needs-lock"
+   has-prop-mods="true"
+   name="AccountsActivity.java"
+   has-props="true"
+   present-props=""/>
+<mv
+   dest=".svn/props/AccountsActivity.java.svn-work"
+   name=".svn/tmp/props/AccountsActivity.java.svn-work"/>
+<readonly
+   name=".svn/props/AccountsActivity.java.svn-work"/>

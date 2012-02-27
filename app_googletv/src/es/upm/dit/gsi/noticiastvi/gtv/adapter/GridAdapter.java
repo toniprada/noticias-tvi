@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import es.upm.dit.gsi.noticiastvi.gtv.R;
 import es.upm.dit.gsi.noticiastvi.gtv.item.Item;
-import es.upm.dit.gsi.noticiastvi.gtv.item.Type;
 import es.upm.dit.gsi.noticiastvi.gtv.item.image.ImageDownloader;
 import es.upm.dit.gsi.noticiastvi.gtv.item.image.ImageDownloaderSingleton;
 
