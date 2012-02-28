@@ -37,7 +37,7 @@ public class RecommendationFragment extends FragmentItemsFromServer {
 
 	@Override
 	public GetItemsThread getThread(Handler handler) {
-		return new RecommendationThread(handler, mAccount.getName());
+		return new RecommendationThread(handler, mAccount.getId());
 	}
 	
 	

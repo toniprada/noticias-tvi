@@ -30,16 +30,16 @@ import android.os.Handler;
 public class ParrillaThread extends GetItemsThread {
 	
 	private static final String ACTION = "getParrilla";
-	private String user = "";
+	private int id;
 
-	public ParrillaThread(Handler handler, String user) {
+	public ParrillaThread(Handler handler, int id) {
 		super(handler);
-		this.user = user;
+		this.id = id;
 	}
 
 	@Override
 	public HttpGet getRequest() {
-		return  new HttpGet(Constant.SERVER_URL + "?action=" + ACTION + "&identifier=" + user);
+		return  new HttpGet(Constant.SERVER_URL + "?action=" + ACTION + "&identifier=" + id);
 	}
 
 }

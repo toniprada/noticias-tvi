@@ -22,17 +22,17 @@ import es.upm.dit.gsi.noticiastvi.gtv.util.Constant;
 import android.os.Handler;
 
 /**
- * Get the list of popular items
+ * Get the list of recommendations
  * 
  * @author Antonio Prada <toniprada@gmail.com>
  * 
  */
-public class PopularThread extends GetItemsThread {
+public class SocialThread extends GetItemsThread {
 	
-	private static final String ACTION = "getPopular";
+	private static final String ACTION = "getRecommendation";
 	private int id;
 	
-	public PopularThread(Handler handler, int id) {
+	public SocialThread(Handler handler, int id) {
 		super(handler);
 		this.id = id;
 	}

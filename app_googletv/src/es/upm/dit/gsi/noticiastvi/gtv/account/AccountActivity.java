@@ -174,8 +174,8 @@ public class AccountActivity extends ListActivity implements OnClickListener {
 						// Now we'll see see what happened in the thread
 						switch (msg.what) {
 						case CreateThread.RESULT_OK:
-							int id = (Integer) msg.obj;
-							createUser(et.getText().toString(), id);
+							Account account = (Account) msg.obj;
+							createUser(account);
 							break;
 						case CreateThread.RESULT_ERROR:
 							Toast.makeText(mContext,
@@ -193,8 +193,8 @@ public class AccountActivity extends ListActivity implements OnClickListener {
 		dialog.show();
 	}
 
-	private void createUser(String name, int id) {
-		Account account = helper.createUser(name, id);
+	private void createUser(Account a) {
+		Account account = helper.createUser(a.getName(), a.getId());
 		if (account != null) {
 			adapter.add(account);
 			adapter.notifyDataSetChanged();

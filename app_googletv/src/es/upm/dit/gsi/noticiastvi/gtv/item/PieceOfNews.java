@@ -30,7 +30,6 @@ public class PieceOfNews implements Item, Serializable{
 	private static final long serialVersionUID = 4844425836589756999L;
 	
 	private String nombre;
-    private double estimacion;
     private String video;
     private String imagen;
     private String contenido;
@@ -39,10 +38,9 @@ public class PieceOfNews implements Item, Serializable{
 
 	public PieceOfNews() {}
 	
-	public PieceOfNews(String nombre, String autor , String contenido, String video, String imagen, double estimacion) {
+	public PieceOfNews(String nombre, String autor , String contenido, String video, String imagen) {
 		this.nombre = nombre;
 		this.autor = autor;
-		this.estimacion = estimacion;
 		this.video = video;
 		this.imagen = imagen;
 		this.contenido = contenido;
@@ -66,16 +64,6 @@ public class PieceOfNews implements Item, Serializable{
 	@Override
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	@Override
-	public double getEstimacion() {
-		return estimacion;
-	}
-
-	@Override
-	public void setEstimacion(double estimacion) {
-		this.estimacion = estimacion;
 	}
 
 	@Override

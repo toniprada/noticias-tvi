@@ -38,7 +38,7 @@ public class ParrillaFragment extends FragmentItemsFromServer {
 
 	@Override
 	public GetItemsThread getThread(Handler handler) {
-		return new ParrillaThread(handler, mAccount.getName());
+		return new ParrillaThread(handler, mAccount.getId());
 	}
 	
 	

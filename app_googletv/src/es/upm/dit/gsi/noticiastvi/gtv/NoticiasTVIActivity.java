@@ -37,9 +37,11 @@ import com.example.google.tv.leftnavbar.LeftNavBarService;
 import es.upm.dit.gsi.noticiastvi.gtv.account.Account;
 import es.upm.dit.gsi.noticiastvi.gtv.account.AccountActivity;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.FavoriteFragment;
+import es.upm.dit.gsi.noticiastvi.gtv.fragment.NewFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.ParrillaFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.PopularFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.RecommendationFragment;
+import es.upm.dit.gsi.noticiastvi.gtv.fragment.SocialFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.util.CustomPreferenceManager;
 
 /**
@@ -103,26 +105,30 @@ public class NoticiasTVIActivity extends Activity {
 		ActionBar bar = getLeftNavBar();
 		bar.removeAllTabs();
 		ActionBar.Tab tabPopular = bar.newTab().setText(getText(R.string.popular));
-		ActionBar.Tab tabStream = bar.newTab().setText(getText(R.string.stream));
-//		ActionBar.Tab tabNew = bar.newTab().setText(getText(R.string.news));
+//		ActionBar.Tab tabStream = bar.newTab().setText(getText(R.string.stream));
+		ActionBar.Tab tabNew = bar.newTab().setText(getText(R.string.news));
 		ActionBar.Tab tabRecommendation = bar.newTab().setText(getText(R.string.recommendation));
+		ActionBar.Tab tabSocial = bar.newTab().setText(getText(R.string.social));
 		ActionBar.Tab tabFavorite = bar.newTab().setText(getText(R.string.favorites));
 		// Create fragments and add it to the tabs
 		Fragment fragmentPopular = new PopularFragment(mContext, mAccount);
-		Fragment fragmentParrilla = new ParrillaFragment(mContext, mAccount);
-//		Fragment fragmentNew = new NewFragment(mContext, mAccount);
+//		Fragment fragmentParrilla = new ParrillaFragment(mContext, mAccount);
+		Fragment fragmentNew = new NewFragment(mContext, mAccount);
 		Fragment fragmentRecommendation = new RecommendationFragment(mContext, mAccount);
+		Fragment fragmentSocial = new SocialFragment(mContext, mAccount);
 		Fragment fragmentFavorite = new FavoriteFragment(mContext, mAccount);
 		tabPopular.setTabListener(new MyTabListener(fragmentPopular));
-		tabStream.setTabListener(new MyTabListener(fragmentParrilla));
-//		tabNew.setTabListener(new MyTabListener(fragmentNew));
+//		tabStream.setTabListener(new MyTabListener(fragmentParrilla));
+		tabNew.setTabListener(new MyTabListener(fragmentNew));
+		tabSocial.setTabListener(new MyTabListener(fragmentSocial));
 		tabRecommendation.setTabListener(new MyTabListener(fragmentRecommendation));
 		tabFavorite.setTabListener(new MyTabListener(fragmentFavorite));
 		// Add tabs to the ActionBar
 		bar.addTab(tabPopular);
-//		bar.addTab(tabNew);
-		bar.addTab(tabStream);
+		bar.addTab(tabNew);
+//		bar.addTab(tabStream);
 		bar.addTab(tabRecommendation);
+		bar.addTab(tabSocial);
 		bar.addTab(tabFavorite);
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		// Remember the last tab open:

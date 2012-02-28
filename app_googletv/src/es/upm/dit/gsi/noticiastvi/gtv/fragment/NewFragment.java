@@ -35,7 +35,7 @@ public class NewFragment extends FragmentItemsFromServer {
 
 	@Override
 	public GetItemsThread getThread(Handler handler) {
-		return new NewThread(handler);
+		return new NewThread(handler, mAccount.getId());
 	}		
 
 }

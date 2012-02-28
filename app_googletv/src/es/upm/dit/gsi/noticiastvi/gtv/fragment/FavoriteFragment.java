@@ -35,7 +35,7 @@ public class FavoriteFragment extends FragmentItemsFromServer {
 
 	@Override
 	public GetItemsThread getThread(Handler handler) {
-		return new FavoritesThread(handler, mAccount.getName());
+		return new FavoritesThread(handler, mAccount.getId());
 	}
 	
 	

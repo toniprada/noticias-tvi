@@ -30,16 +30,16 @@ import android.os.Handler;
 public class RecommendationThread extends GetItemsThread {
 	
 	private static final String ACTION = "getRecommendationSocial";
-	private String user = "";
+	private int id;
 	
-	public RecommendationThread(Handler handler, String user) {
+	public RecommendationThread(Handler handler, int id) {
 		super(handler);
-		this.user = user;
+		this.id = id;
 	}
 
 	@Override
 	public HttpGet getRequest() {
-		return  new HttpGet(Constant.SERVER_URL + "?action=" + ACTION + "&identifier=" + user);
+		return  new HttpGet(Constant.SERVER_URL + "?action=" + ACTION + "&identifier=" + id);
 	}
 
 }

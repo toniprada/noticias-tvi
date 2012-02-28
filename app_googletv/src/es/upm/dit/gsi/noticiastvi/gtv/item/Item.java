@@ -35,10 +35,6 @@ public interface Item{
 	public String getNombre();
 
 	public void setNombre(String nombre);
-
-	public double getEstimacion();
-	
-	public void setEstimacion(double estimacion);
 	
 	public String getVideo();
 	

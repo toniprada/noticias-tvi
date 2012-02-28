@@ -15,12 +15,10 @@
 
 package es.upm.dit.gsi.noticiastvi.gtv.account;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
@@ -29,6 +27,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import com.google.gson.Gson;
+
 import es.upm.dit.gsi.noticiastvi.gtv.util.Constant;
 
 /**
@@ -63,32 +64,33 @@ public class CreateThread extends Thread {
 				handler.sendEmptyMessage(RESULT_ERROR);
 				return;
 			}
-			HttpEntity getResponseEntity = getResponse.getEntity();
-			String res =  inputStreamToString( getResponseEntity.getContent()  );
-			int id = Integer.parseInt(res);
-			if (id > -1) {
-				handler.sendMessage(Message.obtain(handler, RESULT_OK, id));
+			InputStream source = getResponse.getEntity().getContent();
+			if (source != null) {
+				Gson gson = new Gson();
+				Reader reader = new InputStreamReader(source);
+				Account account = gson.fromJson(reader, Account.class);
+				handler.sendMessage(Message.obtain(handler, RESULT_OK, account));
 			} else {
 				handler.sendEmptyMessage(RESULT_ERROR);
-			}
+			}			
 		} catch (Exception e) {
 			handler.sendEmptyMessage(RESULT_ERROR);
 			Log.e("ERROR", e.getMessage());
 		}
 	}
 	
-	private String inputStreamToString(InputStream is) throws IOException {
-	    String s = "";
-	    String line = "";
-	    
-	    // Wrap a BufferedReader around the InputStream
-	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-	    
-	    // Read response until the end
-	    while ((line = rd.readLine()) != null) { s += line; }
-	    
-	    // Return full string
-	    return s;
-	}
+//	private String inputStreamToString(InputStream is) throws IOException {
+//	    String s = "";
+//	    String line = "";
+//	    
+//	    // Wrap a BufferedReader around the InputStream
+//	    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+//	    
+//	    // Read response until the end
+//	    while ((line = rd.readLine()) != null) { s += line; }
+//	    
+//	    // Return full string
+//	    return s;
+//	}
 
 }

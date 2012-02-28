@@ -35,7 +35,7 @@ public class PopularFragment extends FragmentItemsFromServer {
 
 	@Override
 	public GetItemsThread getThread(Handler handler) {
-		return new PopularThread(handler);
+		return new PopularThread(handler, mAccount.getId());
 	}
 	
 	

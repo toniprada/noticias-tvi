@@ -13,33 +13,33 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-package es.upm.dit.gsi.noticiastvi.gtv.thread;
+package es.upm.dit.gsi.noticiastvi.gtv.fragment;
 
-import org.apache.http.client.methods.HttpGet;
-
-import es.upm.dit.gsi.noticiastvi.gtv.util.Constant;
-
+import android.content.Context;
 import android.os.Handler;
+import es.upm.dit.gsi.noticiastvi.gtv.account.Account;
+import es.upm.dit.gsi.noticiastvi.gtv.thread.GetItemsThread;
+import es.upm.dit.gsi.noticiastvi.gtv.thread.SocialThread;
 
 /**
- * Get the list of popular items
+ * Fragment to show the recommendations
  * 
  * @author Antonio Prada <toniprada@gmail.com>
  * 
  */
-public class PopularThread extends GetItemsThread {
+public class SocialFragment extends FragmentItemsFromServer {
 	
-	private static final String ACTION = "getPopular";
-	private int id;
-	
-	public PopularThread(Handler handler, int id) {
-		super(handler);
-		this.id = id;
+//	private String user;
+
+	public SocialFragment(Context context, Account account) {
+		super(context, account);
 	}
 
 	@Override
-	public HttpGet getRequest() {
-		return  new HttpGet(Constant.SERVER_URL + "?action=" + ACTION + "&identifier=" + id);
+	public GetItemsThread getThread(Handler handler) {
+		return new SocialThread(handler, mAccount.getId());
 	}
+	
+	
 
 }

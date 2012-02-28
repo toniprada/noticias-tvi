@@ -17,8 +17,9 @@
 
     <string name="app_name">NoticiasTVi</string>
     <string name="popular">Popular</string>
-    <string name="stream">Parrilla</string>
+<!--     <string name="stream">Parrilla</string> -->
     <string name="news">Nuevo</string>
+    <string name="recommendation">Parrilla</string>
     <string name="please_wait">Por favor espere</string>
     <string name="getting_videos">Obteniendo los videos&#8230;</string>
     <string name="ok">Ok</string>
@@ -49,7 +50,7 @@ See the License for the specific language governing permissions and limitations 
     <string name="about_messagecreating_">Texto largo.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="settings">Ajustes</string>
 	<string name="change_user">Cambiar de usuario</string>
-	<string name="recommendation">Social</string>
+	<string name="social">Social</string>
 	<string name="favorites">Favoritos</string>
 	<string name="error_favorite">Error de conexión, no se ha podido añadir/eliminar de favoritos</string>
 	

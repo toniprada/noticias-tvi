@@ -17,7 +17,10 @@ package es.upm.dit.gsi.noticiastvi.gtv.thread;
 
 import org.apache.http.client.methods.HttpGet;
 
+import es.upm.dit.gsi.noticiastvi.gtv.util.Constant;
+
 import android.os.Handler;
+
 
 /**
  * Get the list of new items
@@ -27,15 +30,18 @@ import android.os.Handler;
  */
 public class NewThread extends GetItemsThread {
 	
-	private static final String URL = "http://138.4.3.224:8080/Recommender/noticias?action=getRecommendation&identifier=toni";
-
-	public NewThread(Handler handler) {
+	private static final String ACTION = "getNews";
+	private int id;
+	
+	public NewThread(Handler handler, int id) {
 		super(handler);
+		this.id = id;
+//		this.id = 1;
 	}
 
 	@Override
 	public HttpGet getRequest() {
-		return  new HttpGet(URL);
+		return  new HttpGet(Constant.SERVER_URL + "?action=" + ACTION + "&identifier=" + id);
 	}
 
 }

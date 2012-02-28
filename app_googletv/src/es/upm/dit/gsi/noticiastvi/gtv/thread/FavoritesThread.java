@@ -30,16 +30,16 @@ import android.os.Handler;
 public class FavoritesThread extends GetItemsThread {
 	
 	private static final String ACTION = "getContentsFromUser"; //&content=title 
-	private String user = "";
+	private int id;
 
-	public FavoritesThread(Handler handler, String user) {
+	public FavoritesThread(Handler handler, int id) {
 		super(handler);
-		this.user = user;
+		this.id = id;
 	}
 
 	@Override
 	public HttpGet getRequest() {
-		return  new HttpGet(Constant.SERVER_URL + "?action=" + ACTION + "&identifier=" + user);
+		return  new HttpGet(Constant.SERVER_URL + "?action=" + ACTION + "&identifier=" + id);
 	}
 
 }
