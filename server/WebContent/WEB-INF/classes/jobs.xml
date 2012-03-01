@@ -32,5 +32,19 @@
 	        </simple>
 	    </trigger>
 	    
+	     <job>
+	        <name>GetSocialJob</name>
+            <job-class>es.upm.dit.gsi.cron.GetSocialFromContents</job-class>
+	    </job>
+	    
+	    <trigger>
+	        <simple>
+	            <name>SimpleTrigger2</name>
+	            <job-name>GetSocialJob</job-name>
+	            <repeat-count>-1</repeat-count> <!-- repeat indefinitely  -->
+	            <repeat-interval>450000</repeat-interval>  <!--  every 45 minutes -->
+	        </simple>
+	    </trigger>
+	    
     </schedule>
 </job-scheduling-data>

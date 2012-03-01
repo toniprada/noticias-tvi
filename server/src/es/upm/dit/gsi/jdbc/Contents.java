@@ -25,7 +25,7 @@ public class Contents {
 	 * @param nameOfContent
 	 * @return itemId
 	 */
-	public static long introduceContent(String title, String video, String capture, long time, String content, String author){
+	public static long introduceContent(String title, String video, String capture, long time, String content, String author, int social){
 		Long contentId=null;
 		
 		try {
@@ -41,7 +41,7 @@ public class Contents {
 	    		LOGGER.info("El identificador asociado al contenido " +title+ " es: " + contentId);
 	    	// Si es la primera vez que aparece el artículo.	
 	    	} else {
-	    		selectStatement = "INSERT INTO contents (title, video, capture, time, content, author) VALUES (?,?,?,?,?,?)";
+	    		selectStatement = "INSERT INTO contents (title, video, capture, time, content, author, social) VALUES (?,?,?,?,?,?,?)";
 				prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 		    	prepStmt.setString(1, title);
 		    	prepStmt.setString(2, video);
@@ -49,6 +49,7 @@ public class Contents {
 		    	prepStmt.setLong(4, time);
 		    	prepStmt.setString(5, content);
 		    	prepStmt.setString(6, author);
+		    	prepStmt.setInt(7, social);
 		    	prepStmt.executeUpdate();
 	    		LOGGER.info("Se ha introducido un nuevo contenido");
 	    		
@@ -266,6 +267,33 @@ public class Contents {
 	}
 	
 	/**
+	 * Nos devuelve la valoración obtenida a través de Twitter y Facebook del contenido.
+	 * 
+	 * @param contentId
+	 * @return social
+	 */
+	public static int getSocial (Long contentId) {
+		int social=0;
+
+		try {
+			String selectStatement = "SELECT social FROM contents WHERE id = ? ";
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
+	    	prepStmt.setLong(1, contentId);
+	    	ResultSet res = prepStmt.executeQuery();
+	    	
+	    	if (res.next()){
+	    		social = res.getInt("social");
+	    	} else {
+	    		LOGGER.warning("No existe ningún contenido con este identificador");
+	    	}
+	    
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    }	
+		return social;
+	}
+	
+	/**
 	 * Nos devuelve el número de contenidos disponibles en la base de datos.
 	 * 
 	 * @return numContent
@@ -324,12 +352,17 @@ public class Contents {
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 		    ResultSet res = prepStmt.executeQuery();
 		    int ini = 0;
+		    long time;
 		    for (int i = 0; i<recients.length; i++){
 		    	recients[i]= new Date(ini);
 		    }
 		    while (res.next()){
 		    	long id = res.getLong("id");
-		    	long time = res.getLong("time");
+		    	if (Long.toString(res.getLong("time")) == ""){
+		    		time = 0;
+		    	} else {
+		    		time = res.getLong("time");
+		    	}
 		    	Date d = new Date(time);
 		    	for (int k = 0; k<recients.length; k++){
 		    		if (d.after(recients[k])){
@@ -348,6 +381,26 @@ public class Contents {
 		    	e.printStackTrace();
 		 }
 		 return idsRecients;
+	 }
+	 
+	/**
+	 * Este método introduce en la base de datos la valoración del contenido
+	 * en las distintas redes sociales.
+	 * 
+	 * @param contentId
+	 * @param social
+	 * @return
+	 */
+	 public static void introduceSocial (long contentId, int social){
+		 try {
+			 String selectStatement = "UPDATE contents SET social=? WHERE id=?";
+			 PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
+			 prepStmt.setInt(1, social);
+			 prepStmt.setLong(2, contentId);
+			 prepStmt.executeUpdate();
+		 } catch (Exception e) {
+			 e.printStackTrace();
+		 }
 	 }
 	 
 }

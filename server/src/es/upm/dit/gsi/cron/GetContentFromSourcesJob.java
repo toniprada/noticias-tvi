@@ -28,7 +28,7 @@ public class GetContentFromSourcesJob implements Job {
 
 	
 	private static final String URL_ELMUNDO = "http://estaticos.elmundo.es/elmundo/rss/portada.xml";
-	private static final Logger LOGGER = Logger.getLogger("jdbc.Contents");
+	private static final Logger LOGGER = Logger.getLogger("cron.GetContentFromSourcesJob");
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		try {
@@ -67,7 +67,7 @@ public class GetContentFromSourcesJob implements Job {
 							String content = entry.getDescription().getValue();
 							content = content.substring(0, content.indexOf("&#160"));
 							
-							Contents.introduceContent(title, video, capture, time, content, author);
+							Contents.introduceContent(title, video, capture, time, content, author, 0);
 
 							// Ejemplo para verlo en accion en
 							// http://localhost:8080/Recommender/getcontentfromsources:

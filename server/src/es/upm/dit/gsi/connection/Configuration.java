@@ -19,6 +19,7 @@ public class Configuration {
 	public static String user = "adri";
 	public static String pass = "K7BEZQNncEHNnvcp";	
 	
+	
 	private static final Logger LOGGER = Logger.getLogger("connection.Configuration");
 	
 	/**
@@ -86,11 +87,8 @@ public class Configuration {
 	 */
 	public void setDbCon(String url, String user, String pass){
 		try {
-			System.out.println("Hola");
 			dbCon= DriverManager.getConnection(url, user, pass);
-			System.out.println("Adiós");
 		} catch (SQLException e) {
-			System.out.println("Dolorr");
 			e.printStackTrace();
 		}
 	}
