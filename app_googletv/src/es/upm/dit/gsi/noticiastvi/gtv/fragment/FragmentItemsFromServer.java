@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import es.upm.dit.gsi.noticiastvi.gtv.R;
@@ -67,6 +68,12 @@ public abstract class FragmentItemsFromServer extends FragmentItems {
 	    	GetItemsThread thread = getThread(handler);
 	    	thread.start();
 	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		getVideos();
+	}
+	
 	
 	public abstract GetItemsThread getThread(Handler handler);
 

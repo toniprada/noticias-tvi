@@ -77,7 +77,7 @@ public class GalleryAdapter extends BaseAdapter {
 //    	if (ts != null) {
 //    		ts.setText(video.getSubTitle());
 //    	}
-    	if (iv != null) {
+    	if (iv != null && item.getCaptura() != null) {
 //            iv.reset();
 //    		iv.setImageUrl(video.getThumb());
 //    		iv.loadImage();

@@ -55,6 +55,14 @@ public interface Item{
 	public void setId(int id);
 	
 	public int getId();
+	
+	public String getFecha();
+	
+	public void setFecha(String fecha);
+	
+	public int getHave();
+	
+	public void setHave(int have);
 
 //	public Type getType();
 //	

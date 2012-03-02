@@ -76,7 +76,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int logo=0x7f02001d;
         public static final int spinner_item_background=0x7f02001e;
         public static final int spinner_list_item_background=0x7f02001f;
-        public static final int video=0x7f020020;
+        public static final int star=0x7f020020;
+        public static final int video=0x7f020021;
     }
     public static final class id {
         public static final int LinearInfo=0x7f090009;

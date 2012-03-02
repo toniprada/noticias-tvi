@@ -30,11 +30,11 @@ public class Account {
 	public static final String NAME = "name";
 	
 	private int id;
-	private String name;
+	private String nombre;
 	
 	public Account(int id, String name) {
 		setId(id);
-		setName(name);
+		setNombre(name);
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class Account {
     public Bundle getAsBundle() {
         Bundle b = new Bundle();
         b.putInt(ID, id);
-        b.putString(NAME, name);
+        b.putString(NAME, nombre);
         return b;
     }
 
@@ -66,15 +66,15 @@ public class Account {
 	/**
 	 * @return the name
 	 */
-	public String getName() {
-		return name;
+	public String getNombre() {
+		return nombre;
 	}
 
 	/**
 	 * @param name the name to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setNombre(String name) {
+		this.nombre = name;
 	}
 
 }

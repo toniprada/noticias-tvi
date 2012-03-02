@@ -29,7 +29,7 @@ import android.os.Handler;
  */
 public class RecommendationThread extends GetItemsThread {
 	
-	private static final String ACTION = "getRecommendationSocial";
+	private static final String ACTION = "getRecommendation";
 	private int id;
 	
 	public RecommendationThread(Handler handler, int id) {

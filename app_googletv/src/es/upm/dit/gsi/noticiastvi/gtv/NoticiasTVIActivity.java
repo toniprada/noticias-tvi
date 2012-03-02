@@ -38,7 +38,6 @@ import es.upm.dit.gsi.noticiastvi.gtv.account.Account;
 import es.upm.dit.gsi.noticiastvi.gtv.account.AccountActivity;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.FavoriteFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.NewFragment;
-import es.upm.dit.gsi.noticiastvi.gtv.fragment.ParrillaFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.PopularFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.RecommendationFragment;
 import es.upm.dit.gsi.noticiastvi.gtv.fragment.SocialFragment;
@@ -243,15 +242,12 @@ public class NoticiasTVIActivity extends Activity {
 				Account account = new Account(b.getInt(Account.ID), b.getString(Account.NAME));
 				mAccount = account;
 				Toast.makeText(mContext,
-						getText(R.string.welcome) + " " + account.getName(),
+						getText(R.string.welcome) + " " + account.getNombre(),
 						Toast.LENGTH_SHORT).show();
 				setupTabs();
 			}
 		}
 	}
-
-
-    
     
 
 }

@@ -107,7 +107,7 @@ public abstract class FragmentItems extends Fragment implements OnItemClickListe
   	        i.putExtra(NoticiasTVIActivity.TITLE, title);
   			Bundle bundle = mAccount.getAsBundle();
   			i.putExtra(Account.ACCOUNT, bundle);
-	        startActivity(i);
+  			startActivityForResult(i, R.layout.player);
 		}
 
 }

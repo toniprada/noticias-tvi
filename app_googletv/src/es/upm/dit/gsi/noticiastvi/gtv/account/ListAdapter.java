@@ -57,7 +57,7 @@ public class ListAdapter extends ArrayAdapter<Account> {
 			Account account = getItem(position);
 			TextView tv = (TextView) v.findViewById(R.id.text);
 			if (tv != null) {
-				tv.setText(account.getName());
+				tv.setText(account.getNombre());
 			}
 			return v;
 	}

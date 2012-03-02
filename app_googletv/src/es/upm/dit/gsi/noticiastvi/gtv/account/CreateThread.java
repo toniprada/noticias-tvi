@@ -18,6 +18,7 @@ package es.upm.dit.gsi.noticiastvi.gtv.account;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -55,8 +56,11 @@ public class CreateThread extends Thread {
 	@Override
 	public void run() {
 		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet get = new HttpGet(Constant.SERVER_URL + "?action=" + ACTION + "&name=" + username);
+		StringBuilder query = new StringBuilder();
 		try {
+			query.append(Constant.SERVER_URL + "?action=" + ACTION + "&name=");
+			query.append(URLEncoder.encode(username.trim(), "UTF-8"));
+			HttpGet get = new HttpGet(query.toString());
 			HttpResponse getResponse = client.execute(get);
 			final int statusCode = getResponse.getStatusLine().getStatusCode();
 			if (statusCode != HttpStatus.SC_OK) {
@@ -69,7 +73,11 @@ public class CreateThread extends Thread {
 				Gson gson = new Gson();
 				Reader reader = new InputStreamReader(source);
 				Account account = gson.fromJson(reader, Account.class);
-				handler.sendMessage(Message.obtain(handler, RESULT_OK, account));
+				if (account.getNombre() != null && account.getNombre() != "") {
+					handler.sendMessage(Message.obtain(handler, RESULT_OK, account));
+				} else {
+					handler.sendEmptyMessage(RESULT_ERROR);
+				}
 			} else {
 				handler.sendEmptyMessage(RESULT_ERROR);
 			}			

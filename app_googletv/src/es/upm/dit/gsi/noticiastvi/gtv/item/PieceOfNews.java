@@ -117,5 +117,29 @@ public class PieceOfNews implements Item, Serializable{
 //		
 //	}
 
+	@Override
+	public String getFecha() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setFecha(String fecha) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getHave() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setHave(int have) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

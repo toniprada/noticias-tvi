@@ -29,7 +29,7 @@ import android.os.Handler;
  */
 public class FavoritesThread extends GetItemsThread {
 	
-	private static final String ACTION = "getContentsFromUser"; //&content=title 
+	private static final String ACTION = "getFavorites"; //&content=title 
 	private int id;
 
 	public FavoritesThread(Handler handler, int id) {

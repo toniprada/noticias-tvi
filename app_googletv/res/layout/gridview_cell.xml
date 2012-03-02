@@ -51,7 +51,7 @@
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/video" />
+        android:src="@drawable/star" />
 <!-- droidfu:autoLoad="true" -->
     <!-- droidfu:imageUrl="http://www.android.com/images/opensourceprojec.gif" -->
     <!-- droidfu:progressDrawable="..." -->

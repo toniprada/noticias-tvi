@@ -15,8 +15,15 @@
 
 package es.upm.dit.gsi.noticiastvi.gtv.item;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -41,13 +48,13 @@ public class SetRemoveFavoriteThread extends Thread {
 	public static final int RESULT_ERROR = 31;
 
 	private Handler handler;
-	private String user = "";
+	private int userId;
 	private int id;
 	private String action = SET;
 
-	public SetRemoveFavoriteThread(Handler handler, String user, int id, String action) {
+	public SetRemoveFavoriteThread(Handler handler, int id, int userId, String action) {
 		this.handler = handler;
-		this.user = user;
+		this.userId = userId;
 		this.id = id;
 		this.action = action;
 	}
@@ -65,10 +72,16 @@ public class SetRemoveFavoriteThread extends Thread {
 		if (!TEST) {
 			DefaultHttpClient client = new DefaultHttpClient();
 			HttpGet getRequest = new HttpGet(Constant.SERVER_URL + "?action="
-					+ action + "&identifier=" + user + "&content=" + id + "&preference=1");
+					+ action + "&identifier=" + userId + "&content=" + id + "&preference=5");
 			try {
-				client.execute(getRequest);
-				return true;
+				HttpResponse getResponse = client.execute(getRequest);
+				InputStream source = getResponse.getEntity().getContent();
+				if (source != null) {
+					String res = convertStreamToString(source);
+					return res.contains("ok");
+				} else {
+					return false;
+				}			
 			} catch (IOException e) {
 				getRequest.abort();
 				Log.w(getClass().getSimpleName(), "Error", e);
@@ -80,6 +93,35 @@ public class SetRemoveFavoriteThread extends Thread {
 		}
 
 	}
+	
+    public String convertStreamToString(InputStream is)
+            throws IOException {
+        /*
+         * To convert the InputStream to String we use the
+         * Reader.read(char[] buffer) method. We iterate until the
+         * Reader return -1 which means there's no more data to
+         * read. We use the StringWriter class to produce the string.
+         */
+        if (is != null) {
+            Writer writer = new StringWriter();
+
+            char[] buffer = new char[1024];
+            try {
+                Reader reader = new BufferedReader(
+                        new InputStreamReader(is, "UTF-8"));
+                int n;
+                while ((n = reader.read(buffer)) != -1) {
+                    writer.write(buffer, 0, n);
+                }
+            } finally {
+                is.close();
+            }
+            return writer.toString();
+        } else {        
+            return "";
+        }
+    }
+
 
 
 }

@@ -75,7 +75,7 @@ public class GridAdapter extends BaseAdapter {
 //    	if (ts != null) {
 //    		ts.setText(video.getSubTitle());
 //    	}
-    	if (iv != null) {
+    	if (iv != null & item.getCaptura() != null) {
             imageDownloader.download(item.getCaptura(), iv);
 //            iv.reset();
 //    		iv.setImageUrl(video.getThumb());
@@ -90,6 +90,11 @@ public class GridAdapter extends BaseAdapter {
     			vid.setVisibility(View.GONE);
 //    		}
 //    		}
+    	}
+    	if (vid!= null && item.getHave() == 1) {
+			vid.setVisibility(View.VISIBLE);
+    	} else {
+			vid.setVisibility(View.GONE);
     	}
 //        LinearLayout lg = (LinearLayout) convertView;
 //        ImageView imageView;

@@ -34,11 +34,11 @@ public class Video implements Item, Serializable{
     private String contenido;
     private String autor;
     private int id;
+    private String fecha;
+    private int have;
     //private Type type;
     
-    
-    private String fecha;
-
+ 
 	public Video() {}
 	
 	public Video(String nombre, String autor , String contenido, String video, String captura) {
@@ -112,6 +112,14 @@ public class Video implements Item, Serializable{
 //		
 //	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getFecha() {
 		return fecha;
 	}
@@ -119,13 +127,13 @@ public class Video implements Item, Serializable{
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-
-	public int getId() {
-		return id;
+	
+	public int getHave() {
+		return have;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setHave(int have) {
+		this.have = have;
 	}
 
 

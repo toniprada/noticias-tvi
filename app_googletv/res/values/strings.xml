@@ -36,8 +36,8 @@
     <string name="paused">Pausado</string>
     <string name="started">Reproduciendo</string>
     <string name="about">Sobre NoticiasTVI</string>
-    <string name="about_text">- GoogleTV application by Antonio Prada (toniprada@gmail.com)\n
-    	- Sources: http://code.google.com/p/noticiastvi-googletv/\n
+    <string name="about_text">GoogleTV application by Antonio Prada (toniprada@gmail.com)\n\n
+    	- Sources: https://github.com/toniprada/NoticiasTVI/tree/master/app_googletv\n
 		- External libraries:\n
 		+ LeftNavBarLibrary: http://code.google.com/p/googletv-android-samples\n\n
 Copyright 2011 UPM-GSI: Group of Intelligent Systems - Universidad Politécnica de Madrid (UPM)\n\n 

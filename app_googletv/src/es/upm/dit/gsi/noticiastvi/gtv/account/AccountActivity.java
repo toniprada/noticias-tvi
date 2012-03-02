@@ -80,7 +80,7 @@ public class AccountActivity extends ListActivity implements OnClickListener {
 	private void deleteAccount(final Account account) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(
-				getText(R.string.are_you_sure_delete) + account.getName()
+				getText(R.string.are_you_sure_delete) + account.getNombre()
 						+ getText(R.string.are_you_sure_delete_finish))
 				.setCancelable(false)
 				.setPositiveButton(getText(R.string.yes),
@@ -194,7 +194,7 @@ public class AccountActivity extends ListActivity implements OnClickListener {
 	}
 
 	private void createUser(Account a) {
-		Account account = helper.createUser(a.getName(), a.getId());
+		Account account = helper.createUser(a.getNombre(), a.getId());
 		if (account != null) {
 			adapter.add(account);
 			adapter.notifyDataSetChanged();

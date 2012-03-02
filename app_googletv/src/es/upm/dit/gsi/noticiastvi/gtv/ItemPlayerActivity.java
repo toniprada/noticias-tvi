@@ -24,6 +24,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -43,9 +44,9 @@ import android.widget.Toast;
 import android.widget.VideoView;
 import es.upm.dit.gsi.noticiastvi.gtv.account.Account;
 import es.upm.dit.gsi.noticiastvi.gtv.adapter.GalleryAdapter;
-import es.upm.dit.gsi.noticiastvi.gtv.item.SetRemoveFavoriteThread;
 import es.upm.dit.gsi.noticiastvi.gtv.item.Item;
 import es.upm.dit.gsi.noticiastvi.gtv.item.ItemList;
+import es.upm.dit.gsi.noticiastvi.gtv.item.SetRemoveFavoriteThread;
 
 /**
  * Video player activity.
@@ -161,7 +162,7 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 	
 	private void setInfo() {
 		 Item i = mItemList.getSelectedItem(); 
-		 mInfoPanel.setInfo(i.getNombre(), i.getAutor(), i.getContenido());
+		 mInfoPanel.setInfo(i);
 	}
 	
 	@Override
@@ -260,37 +261,32 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 		} else {
 			action = SetRemoveFavoriteThread.SET;
 			remove = false;
-		
 		}
 		Handler handler = new Handler() {
 			@Override
     		public void handleMessage(Message msg) {
     			switch(msg.what) {
     			case SetRemoveFavoriteThread.RESULT_OK:
-    				if (remove) {
-    					mStar.setChecked(false);
-    					if (!mInfoPanel.isVisible()) {
-    						Toast.makeText(mContext,
-    								getText(R.string.deleted_favorite),
-    								Toast.LENGTH_SHORT).show();
-    					}
-    				} else {
-    					mStar.setChecked(true);
-    					if (!mInfoPanel.isVisible()) {
-    						Toast.makeText(mContext,
-    								getText(R.string.added_favorite),
-    								Toast.LENGTH_SHORT).show();
-    					}
-    				}
-    				break;
-    			case SetRemoveFavoriteThread.RESULT_ERROR:
-    				Toast.makeText(mContext,
-							getText(R.string.error_favorite),
+					if (remove) {
+						mStar.setChecked(false);
+						Toast.makeText(mContext,
+								getText(R.string.deleted_favorite),
+								Toast.LENGTH_LONG).show();
+					} else {
+						mStar.setChecked(true);
+						Toast.makeText(mContext,
+								getText(R.string.added_favorite),
+								Toast.LENGTH_LONG).show();
+					}
+					break;
+				case SetRemoveFavoriteThread.RESULT_ERROR:
+					Toast.makeText(mContext, getText(R.string.error_favorite),
 							Toast.LENGTH_SHORT).show();
+    				break;
     			}
     		}
     	};
-    	SetRemoveFavoriteThread favoriteThread = new SetRemoveFavoriteThread(handler, mAccount.getName(),  mItemList.getSelectedItem().getId(), action);
+    	SetRemoveFavoriteThread favoriteThread = new SetRemoveFavoriteThread(handler, mAccount.getId(),  mItemList.getSelectedItem().getId(), action);
     	favoriteThread.start();
 	}
 	
@@ -431,10 +427,11 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 		    enabled = true;
 		}
 		
-		public void setInfo(String title, String subtitle, String text) { 
-	        mTitle.setText(title);
-	        mSubtitle.setText(subtitle);
-	        mText.setText(text);
+		public void setInfo(Item item) { 
+	        mTitle.setText(Html.fromHtml(item.getNombre()));
+	        mSubtitle.setText(Html.fromHtml(item.getFecha() + " - " + item.getAutor()));
+	        mText.setText(Html.fromHtml(item.getContenido()));
+	        mStar.setChecked(item.getHave() == 1);
 		}
 		
 		
