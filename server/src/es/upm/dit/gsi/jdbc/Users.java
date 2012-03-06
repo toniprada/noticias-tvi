@@ -70,8 +70,8 @@ public class Users {
 			String selectStatement = "DELETE FROM users WHERE id=?";
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			prepStmt.setLong(1, userId);
-			LOGGER.info("Se ha dado de baja el usuario: "+getnameOfUser(userId));
-	    	prepStmt.execute();
+	    	if (prepStmt.execute())
+	    		LOGGER.info("Se ha dado de baja el usuario: "+getnameOfUser(userId));
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    }

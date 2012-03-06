@@ -24,6 +24,7 @@ public class InfoFacebook {
 		title = title.replace(",", "");
 		title = title.replace(" ", "%2B");
 		String call = "http://localhost:3434/ejson/http://www.google.com/search%3Fq%3D"+title;
+		LOGGER.info(call);
 		JSONArray json = new JSONArray(parser(call));
 		String [] sources = new String [json.length()];
 	    for (int i=0; i<json.length(); i++){

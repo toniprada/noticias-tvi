@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
-	<display-name>Recommender</display-name>
+	<display-name>NoticiasTVi</display-name>
 	<listener>
 		<listener-class>org.quartz.ee.servlet.QuartzInitializerListener</listener-class>
 	</listener>
@@ -34,5 +34,15 @@
 	<servlet-mapping>
 		<servlet-name>GetContentFromSources</servlet-name>
 		<url-pattern>/getcontentfromsources</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>GetSocialFromContents</display-name>
+		<servlet-name>GetSocialFromContents</servlet-name>
+		<servlet-class>es.upm.dit.gsi.cron.GetSocialFromContents</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetSocialFromContents</servlet-name>
+		<url-pattern>/getsocialfromcontents</url-pattern>
 	</servlet-mapping>
 </web-app>

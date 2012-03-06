@@ -1,8 +1,8 @@
 package es.upm.dit.gsi.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
-import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -25,7 +25,7 @@ public class Contents {
 	 * @param nameOfContent
 	 * @return itemId
 	 */
-	public static long introduceContent(String title, String video, String capture, String date, String content, String author){
+	public static long introduceContent(String title, String video, String capture, long time, String content, String author, int social){
 		Long contentId=null;
 		
 		try {
@@ -41,14 +41,15 @@ public class Contents {
 	    		LOGGER.info("El identificador asociado al contenido " +title+ " es: " + contentId);
 	    	// Si es la primera vez que aparece el artículo.	
 	    	} else {
-	    		selectStatement = "INSERT INTO contents (title, video, capture, date, content, author) VALUES (?,?,?,?,?,?)";
+	    		selectStatement = "INSERT INTO contents (title, video, capture, time, content, author, social) VALUES (?,?,?,?,?,?,?)";
 				prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 		    	prepStmt.setString(1, title);
 		    	prepStmt.setString(2, video);
 		    	prepStmt.setString(3, capture);
-		    	prepStmt.setString(4, date);
+		    	prepStmt.setLong(4, time);
 		    	prepStmt.setString(5, content);
 		    	prepStmt.setString(6, author);
+		    	prepStmt.setInt(7, social);
 		    	prepStmt.executeUpdate();
 	    		LOGGER.info("Se ha introducido un nuevo contenido");
 	    		
@@ -193,13 +194,13 @@ public class Contents {
 		String dateOfContent="";
 
 		try {
-			String selectStatement = "SELECT date FROM contents WHERE id = ? ";
+			String selectStatement = "SELECT time FROM contents WHERE id = ? ";
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 	    	prepStmt.setLong(1, contentId);
 	    	ResultSet res = prepStmt.executeQuery();
 	    	
 	    	if (res.next()){
-	    		dateOfContent = res.getString("date");
+	    		dateOfContent = new Date(res.getLong("time")).toString();
 	    	} else {
 	    		LOGGER.warning("No existe ningún contenido con este identificador");
 	    	}
@@ -266,6 +267,33 @@ public class Contents {
 	}
 	
 	/**
+	 * Nos devuelve la valoración obtenida a través de Twitter y Facebook del contenido.
+	 * 
+	 * @param contentId
+	 * @return social
+	 */
+	public static int getSocial (Long contentId) {
+		int social=0;
+
+		try {
+			String selectStatement = "SELECT social FROM contents WHERE id = ? ";
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
+	    	prepStmt.setLong(1, contentId);
+	    	ResultSet res = prepStmt.executeQuery();
+	    	
+	    	if (res.next()){
+	    		social = res.getInt("social");
+	    	} else {
+	    		LOGGER.warning("No existe ningún contenido con este identificador");
+	    	}
+	    
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    }	
+		return social;
+	}
+	
+	/**
 	 * Nos devuelve el número de contenidos disponibles en la base de datos.
 	 * 
 	 * @return numContent
@@ -318,31 +346,31 @@ public class Contents {
 	 */
 	 public static long [] getMoreRecients(int num) {
 		 long[] idsRecients = new long[num];
-		 GregorianCalendar [] recients = new GregorianCalendar [num];
+		 Date [] recients = new Date [num];	
 		 try {
-			String selectStatement = "SELECT id, date FROM contents";
+			String selectStatement = "SELECT id, time FROM contents";
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 		    ResultSet res = prepStmt.executeQuery();
 		    int ini = 0;
+		    long time;
 		    for (int i = 0; i<recients.length; i++){
-		    	recients[i]= new GregorianCalendar(ini, ini, ini, ini, ini);
+		    	recients[i]= new Date(ini);
 		    }
 		    while (res.next()){
 		    	long id = res.getLong("id");
-		    	String s = res.getString("date");
-		    	int day = Integer.parseInt((String) s.subSequence(0, 2));
-		    	int month = Integer.parseInt((String) s.subSequence(3, 5));
-		    	int year = Integer.parseInt((String) s.subSequence(6, 10));
-		    	int hour = Integer.parseInt((String) s.subSequence(11, 13));
-		    	int minute = Integer.parseInt((String) s.subSequence(14, 16));   	
-		    	GregorianCalendar cal = new GregorianCalendar(year, month, day, hour, minute);
+		    	if (Long.toString(res.getLong("time")) == ""){
+		    		time = 0;
+		    	} else {
+		    		time = res.getLong("time");
+		    	}
+		    	Date d = new Date(time);
 		    	for (int k = 0; k<recients.length; k++){
-		    		if (cal.compareTo(recients[k])>0){
+		    		if (d.after(recients[k])){
 		    			for (int h=recients.length-1; h>k; h--){
 							recients[h]=recients[h-1];
 							idsRecients[h]=idsRecients[h-1];
 						}
-		    			recients[k]=cal;
+		    			recients[k]=d;
 		    			idsRecients[k]=id;
 		    			break;
 		    		}
@@ -353,6 +381,26 @@ public class Contents {
 		    	e.printStackTrace();
 		 }
 		 return idsRecients;
+	 }
+	 
+	/**
+	 * Este método introduce en la base de datos la valoración del contenido
+	 * en las distintas redes sociales.
+	 * 
+	 * @param contentId
+	 * @param social
+	 * @return
+	 */
+	 public static void introduceSocial (long contentId, int social){
+		 try {
+			 String selectStatement = "UPDATE contents SET social=? WHERE id=?";
+			 PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
+			 prepStmt.setInt(1, social);
+			 prepStmt.setLong(2, contentId);
+			 prepStmt.executeUpdate();
+		 } catch (Exception e) {
+			 e.printStackTrace();
+		 }
 	 }
 	 
 }

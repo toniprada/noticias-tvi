@@ -4,7 +4,7 @@ dir
 41
 http://usuario@lab.gsi.dit.upm.es/svn/mashups/Recommender/src/es/upm/dit/gsi
 http://usuario@lab.gsi.dit.upm.es/svn/mashups
-delete
+
 
 
 2011-02-15T12:06:18.790466Z
@@ -26,31 +26,15 @@ adri
 
 53b011e0-facb-442a-a1ff-ae44e789d963
 
-jdbc
-dir
-
-
-
-delete
-
 logger
 dir
-
-
-
-delete
-
-servlet
-dir
-
-
-
-delete
 
 test
 dir
-
-
-
-delete
+
+jdbc
+dir
+
+servlet
+dir
 

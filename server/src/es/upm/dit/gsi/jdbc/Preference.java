@@ -93,12 +93,13 @@ public class Preference {
 	public static Vector<Long> RatedContentsOfUser (long userId) {
 		Vector<Long> contentsRatedIds = new Vector<Long>();
 		try {
-			String selectStatement = "SELECT DISTINCT content_id FROM preferenceTable WHERE user_id=?";
+			String selectStatement = "SELECT content_id FROM preferenceTable WHERE user_id=?";
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			prepStmt.setLong(1, userId);
 			ResultSet res = prepStmt.executeQuery();
-			while (res.next())
+			while (res.next()){
 				contentsRatedIds.addElement(res.getLong("content_id"));
+			}
 		} catch (Exception e) {
 	    	e.printStackTrace();
 	    }
