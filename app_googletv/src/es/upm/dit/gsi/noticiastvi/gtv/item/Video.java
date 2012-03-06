@@ -29,23 +29,21 @@ public class Video implements Item, Serializable{
 	private static final long serialVersionUID = -456468045140639434L;
 		
     private String nombre;
-    private double estimacion;
     private String video;
     private String captura;
     private String contenido;
     private String autor;
     private int id;
+    private String fecha;
+    private int have;
     //private Type type;
     
-    
-    private String fecha;
-
+ 
 	public Video() {}
 	
-	public Video(String nombre, String autor , String contenido, String video, String captura, double estimacion) {
+	public Video(String nombre, String autor , String contenido, String video, String captura) {
 		this.nombre = nombre;
 		this.autor = autor;
-		this.estimacion = estimacion;
 		this.video = video;
 		this.captura = captura;
 		this.contenido = contenido;
@@ -61,16 +59,6 @@ public class Video implements Item, Serializable{
 	@Override
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	@Override
-	public double getEstimacion() {
-		return estimacion;
-	}
-
-	@Override
-	public void setEstimacion(double estimacion) {
-		this.estimacion = estimacion;
 	}
 
 	@Override
@@ -124,6 +112,14 @@ public class Video implements Item, Serializable{
 //		
 //	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getFecha() {
 		return fecha;
 	}
@@ -131,13 +127,13 @@ public class Video implements Item, Serializable{
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-
-	public int getId() {
-		return id;
+	
+	public int getHave() {
+		return have;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setHave(int have) {
+		this.have = have;
 	}
 
 

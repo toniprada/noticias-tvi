@@ -24,6 +24,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -43,12 +44,13 @@ import android.widget.Toast;
 import android.widget.VideoView;
 import es.upm.dit.gsi.noticiastvi.gtv.account.Account;
 import es.upm.dit.gsi.noticiastvi.gtv.adapter.GalleryAdapter;
-import es.upm.dit.gsi.noticiastvi.gtv.item.FavoriteThread;
 import es.upm.dit.gsi.noticiastvi.gtv.item.Item;
 import es.upm.dit.gsi.noticiastvi.gtv.item.ItemList;
+import es.upm.dit.gsi.noticiastvi.gtv.item.SetRemoveFavoriteThread;
 
 /**
- * Video Player that shows info, a rating bar, etc
+ * Video player activity.
+ * It also shows additional info, has rating capabilities, etc
  * 
  * @author Antonio Prada <toniprada@gmail.com>
  * 
@@ -160,7 +162,7 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 	
 	private void setInfo() {
 		 Item i = mItemList.getSelectedItem(); 
-		 mInfoPanel.setInfo(i.getNombre(), i.getAutor(), i.getContenido());
+		 mInfoPanel.setInfo(i);
 	}
 	
 	@Override
@@ -254,43 +256,37 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 		String action;
 		final boolean remove;
 		if (mStar.isChecked()) {
-			action = FavoriteThread.REMOVE;
+			action = SetRemoveFavoriteThread.REMOVE;
 			remove = true;
 		} else {
-			action = FavoriteThread.SET;
+			action = SetRemoveFavoriteThread.SET;
 			remove = false;
-		
 		}
 		Handler handler = new Handler() {
-    		@SuppressWarnings("unchecked")
 			@Override
     		public void handleMessage(Message msg) {
     			switch(msg.what) {
-    			case FavoriteThread.RESULT_OK:
-    				if (remove) {
-    					mStar.setChecked(false);
-    					if (!mInfoPanel.isVisible()) {
-    						Toast.makeText(mContext,
-    								getText(R.string.deleted_favorite),
-    								Toast.LENGTH_SHORT).show();
-    					}
-    				} else {
-    					mStar.setChecked(true);
-    					if (!mInfoPanel.isVisible()) {
-    						Toast.makeText(mContext,
-    								getText(R.string.added_favorite),
-    								Toast.LENGTH_SHORT).show();
-    					}
-    				}
-    				break;
-    			case FavoriteThread.RESULT_ERROR:
-    				Toast.makeText(mContext,
-							getText(R.string.error_favorite),
+    			case SetRemoveFavoriteThread.RESULT_OK:
+					if (remove) {
+						mStar.setChecked(false);
+						Toast.makeText(mContext,
+								getText(R.string.deleted_favorite),
+								Toast.LENGTH_LONG).show();
+					} else {
+						mStar.setChecked(true);
+						Toast.makeText(mContext,
+								getText(R.string.added_favorite),
+								Toast.LENGTH_LONG).show();
+					}
+					break;
+				case SetRemoveFavoriteThread.RESULT_ERROR:
+					Toast.makeText(mContext, getText(R.string.error_favorite),
 							Toast.LENGTH_SHORT).show();
+    				break;
     			}
     		}
     	};
-    	FavoriteThread favoriteThread = new FavoriteThread(handler, mAccount.getName(),  mItemList.getSelectedItem().getId(), action);
+    	SetRemoveFavoriteThread favoriteThread = new SetRemoveFavoriteThread(handler, mAccount.getId(),  mItemList.getSelectedItem().getId(), action);
     	favoriteThread.start();
 	}
 	
@@ -431,10 +427,11 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 		    enabled = true;
 		}
 		
-		public void setInfo(String title, String subtitle, String text) { 
-	        mTitle.setText(title);
-	        mSubtitle.setText(subtitle);
-	        mText.setText(text);
+		public void setInfo(Item item) { 
+	        mTitle.setText(Html.fromHtml(item.getNombre()));
+	        mSubtitle.setText(Html.fromHtml(item.getFecha() + " - " + item.getAutor()));
+	        mText.setText(Html.fromHtml(item.getContenido()));
+	        mStar.setChecked(item.getHave() == 1);
 		}
 		
 		
@@ -443,10 +440,11 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 			enabled = true;
 		}
 		
-		public void disable() {
-			hide();
-			enabled = false;
-		}
+		// ENABLE & DISABLE IS FOR TEXT NEWS
+//		public void disable() {
+//			hide();
+//			enabled = false;
+//		}
 		
 		public boolean handleKey(int keyCode) {
 			if (!enabled) {

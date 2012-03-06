@@ -16,7 +16,7 @@
 package es.upm.dit.gsi.noticiastvi.gtv.item.image;
 
 /**
- * Singleton pattern for ImageDownloader. Allows sharing the cache between
+ * Singleton pattern for ImageDownloader. Allows cache sharing between
  * different fragments and activities.
  * 
  * @author Antonio Prada <toniprada@gmail.com>

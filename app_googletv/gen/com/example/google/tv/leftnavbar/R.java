@@ -76,7 +76,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int logo=0x7f02001d;
         public static final int spinner_item_background=0x7f02001e;
         public static final int spinner_list_item_background=0x7f02001f;
-        public static final int video=0x7f020020;
+        public static final int star=0x7f020020;
+        public static final int video=0x7f020021;
     }
     public static final class id {
         public static final int LinearInfo=0x7f090009;
@@ -150,7 +151,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class string {
         public static final int about=0x7f070014;
-        public static final int about_message=0x7f070016;
+        public static final int about_messagecreating_=0x7f070016;
         public static final int about_text=0x7f070015;
         public static final int added_favorite=0x7f070010;
         public static final int app_name=0x7f070001;
@@ -158,22 +159,27 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int are_you_sure_delete_finish=0x7f07000c;
         public static final int change_user=0x7f070018;
         public static final int choose_user=0x7f07000a;
+        public static final int creating_user=0x7f07001d;
         public static final int deleted_favorite=0x7f070011;
+        public static final int deleting_user=0x7f07001e;
+        public static final int error_create_user=0x7f07001c;
         public static final int error_favorite=0x7f07001b;
         public static final int favorites=0x7f07001a;
         public static final int getting_videos=0x7f070006;
         public static final int lib_leftnav_bar_option_label=0x7f070000;
         public static final int new_user=0x7f070008;
-        public static final int news=0x7f070004;
+        /**      <string name="stream">Parrilla</string> 
+         */
+        public static final int news=0x7f070003;
         public static final int no=0x7f07000e;
         public static final int ok=0x7f070007;
         public static final int paused=0x7f070012;
         public static final int please_wait=0x7f070005;
         public static final int popular=0x7f070002;
-        public static final int recommendation=0x7f070019;
+        public static final int recommendation=0x7f070004;
         public static final int settings=0x7f070017;
+        public static final int social=0x7f070019;
         public static final int started=0x7f070013;
-        public static final int stream=0x7f070003;
         public static final int welcome=0x7f07000f;
         public static final int whats_your_name=0x7f070009;
         public static final int yes=0x7f07000d;

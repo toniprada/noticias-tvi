@@ -35,10 +35,6 @@ public interface Item{
 	public String getNombre();
 
 	public void setNombre(String nombre);
-
-	public double getEstimacion();
-	
-	public void setEstimacion(double estimacion);
 	
 	public String getVideo();
 	
@@ -59,6 +55,14 @@ public interface Item{
 	public void setId(int id);
 	
 	public int getId();
+	
+	public String getFecha();
+	
+	public void setFecha(String fecha);
+	
+	public int getHave();
+	
+	public void setHave(int have);
 
 //	public Type getType();
 //	
