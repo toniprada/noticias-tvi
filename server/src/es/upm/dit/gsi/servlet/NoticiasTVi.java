@@ -231,30 +231,49 @@ public class NoticiasTVi extends HttpServlet {
 	 */
 	private void getPopular (HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
 		try {
-			PrintWriter out = res.getWriter();
+			PrintWriter out = res.getWriter();		
 			noticias.clear();
 			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
 			int popular = Constants.NUM_RESULTS;
 			HashMap<Long, Float> averageRatings = Preference.averageRatings();
-			Vector<Long> contentsids = Contents.getContentsIds();
+			Object[] idsContents = averageRatings.keySet().toArray();
+			if (averageRatings.size() < popular) {
+				popular = averageRatings.size();
+				for (int j = 0; j<averageRatings.size(); j++){
+					if (Preference.numVoteOfContent((Long)idsContents[j]) < Constants.MIN_NUM_VOTE)
+						popular = popular -1;
+				}
+			}
+			
 			long[] id = new long[popular];
 			float[] value = new float[popular];
 			for (int j=0; j<popular; j++){
 				value[j]=0;
 			}
 			boolean NoPopular = true;
-			for (int i=0; i<contentsids.size(); i++){
+			
+			for (int i=0; i<idsContents.length; i++){
 				for (int k=0; k<popular; k++){
-					if (Preference.numVoteOfContent(contentsids.get(i)) > Constants.MIN_NUM_VOTE){
+					if (Preference.numVoteOfContent((Long)idsContents[i]) >= Constants.MIN_NUM_VOTE){
 						NoPopular = false;
-						if((averageRatings.get(contentsids.get(i))) != null){
-							if (averageRatings.get(contentsids.get(i))>value[k]){
+						if((averageRatings.get((Long)idsContents[i])) != null){
+							if (averageRatings.get((Long)idsContents[i])>value[k]){
 								for (int h=popular-1; h>k; h--){
 									id[h]=id[h-1];
 									value[h]=value[h-1];
 								}
-								id[k]=contentsids.get(i);
-								value[k]=averageRatings.get(contentsids.get(i));
+								id[k]=(Long)idsContents[i];
+								value[k]=averageRatings.get((Long)idsContents[i]);
+								break;
+							}
+							if (averageRatings.get((Long)idsContents[i])== value[k] && 
+									Preference.numVoteOfContent((Long)idsContents[i]) > Preference.numVoteOfContent(id[k]) ){
+								for (int h=popular-1; h>k; h--){
+									id[h]=id[h-1];
+									value[h]=value[h-1];
+								}
+								id[k]=(Long)idsContents[i];
+								value[k]=averageRatings.get((Long)idsContents[i]);
 								break;
 							}
 						}
@@ -477,6 +496,8 @@ public class NoticiasTVi extends HttpServlet {
 		try {
 			PrintWriter out =res.getWriter();
 			Preference.removePreferencesUser(Long.parseLong(req.getParameter(Constants.IDENTIFIER)));
+			if (Users.getnameOfUser(Long.parseLong(req.getParameter(Constants.IDENTIFIER)))==null)
+				out.print("ok");
 			Users.removeUser(Long.parseLong(req.getParameter(Constants.IDENTIFIER)));
 			out.print("ok");
 		} catch (Exception e) {
@@ -579,7 +600,7 @@ public class NoticiasTVi extends HttpServlet {
 			int num = Contents.getNumContents();
 			PrintWriter out =res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.IDENTIFIER));
-			for (int k=0; k<Constants.NUM_RESULTS; k++){
+			for (int k=Constants.NUM_RESULTS-50; k<Constants.NUM_RESULTS; k++){
 				contentId = (long)(rnd.nextDouble()*num);
 				while (Contents.getTitleOfContent(contentId) == ""){
 					contentId = (long)(rnd.nextDouble()*num);
