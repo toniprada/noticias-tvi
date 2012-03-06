@@ -29,7 +29,7 @@ import android.os.Handler;
  */
 public class ParrillaThread extends GetItemsThread {
 	
-	private static final String ACTION = "getParrilla";
+	private static final String ACTION = "getRecommendation";
 	private int id;
 
 	public ParrillaThread(Handler handler, int id) {

@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.google.tv.leftnavbar.LeftNavBar;
@@ -142,6 +143,7 @@ public class NoticiasTVIActivity extends Activity {
 			bar.selectTab(tab);
 		}
 	}
+
 
 
 

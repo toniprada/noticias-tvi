@@ -27,6 +27,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import android.os.Handler;
 import android.os.Message;
@@ -83,11 +86,13 @@ public abstract class GetItemsThread extends Thread {
 	}
 
 	private InputStream retrieveStream() {
-
-		DefaultHttpClient client = new DefaultHttpClient();
-
+		HttpParams httpParameters = new BasicHttpParams();
+		int timeoutConnection = 10000;
+		HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+		int timeoutSocket = 10000;
+		HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+		DefaultHttpClient client = new DefaultHttpClient(httpParameters);
 		HttpGet getRequest = getRequest();
-
 		try {
 
 			HttpResponse getResponse = client.execute(getRequest);

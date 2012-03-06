@@ -19,7 +19,7 @@
     <string name="popular">Popular</string>
 <!--     <string name="stream">Parrilla</string> -->
     <string name="news">Nuevo</string>
-    <string name="recommendation">Parrilla</string>
+    <string name="recommendation">Recomendado</string>
     <string name="please_wait">Por favor espere</string>
     <string name="getting_videos">Obteniendo los videos&#8230;</string>
     <string name="ok">Ok</string>
@@ -51,7 +51,7 @@ See the License for the specific language governing permissions and limitations 
     <string name="settings">Ajustes</string>
 	<string name="change_user">Cambiar de usuario</string>
 	<string name="social">Social</string>
-	<string name="favorites">Favoritos</string>
+	<string name="favorites">Tus favoritos</string>
 	<string name="error_favorite">Error de conexión, no se ha podido añadir/eliminar de favoritos</string>
 	
 	<string name="error_create_user">Error creando el usuario</string>

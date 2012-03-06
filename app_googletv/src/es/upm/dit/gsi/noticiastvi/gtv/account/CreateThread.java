@@ -24,6 +24,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import android.os.Handler;
 import android.os.Message;
@@ -55,7 +58,12 @@ public class CreateThread extends Thread {
 
 	@Override
 	public void run() {
-		DefaultHttpClient client = new DefaultHttpClient();
+		HttpParams httpParameters = new BasicHttpParams();
+		int timeoutConnection = 10000;
+		HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+		int timeoutSocket = 10000;
+		HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+		DefaultHttpClient client = new DefaultHttpClient(httpParameters);
 		StringBuilder query = new StringBuilder();
 		try {
 			query.append(Constant.SERVER_URL + "?action=" + ACTION + "&name=");

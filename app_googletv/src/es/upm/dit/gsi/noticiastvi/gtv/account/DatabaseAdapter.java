@@ -30,7 +30,7 @@ import android.util.Log;
  */
 public class DatabaseAdapter {
 	
-	private static final int DB_VERSION = 2;
+	private static final int DB_VERSION = 3;
 	private static final String DB_TABLE = "user";
 	private static final String DB_NAME = "login";
 	private static final String DB_CREATE = "create table " + DB_TABLE + " ( "

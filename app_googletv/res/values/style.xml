@@ -21,4 +21,12 @@
 	<style name="ActionBar" parent="android:style/Widget.Holo.ActionBar">
 		<item name="android:background">#50000000</item>
 	</style>
+	
+	<style name="BarTabText" parent="Widget.ActionBarView_TabText">
+        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/leftnav_bar_tab_text_dark</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+	
 </resources>

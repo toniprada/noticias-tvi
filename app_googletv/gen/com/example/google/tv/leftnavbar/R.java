@@ -186,6 +186,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class style {
         public static final int ActionBar=0x7f08001b;
+        public static final int BarTabText=0x7f08001c;
         public static final int TextAppearance=0x7f080002;
         public static final int TextAppearance_ActionBar_Subtitle=0x7f080005;
         public static final int TextAppearance_ActionBar_Title=0x7f080004;

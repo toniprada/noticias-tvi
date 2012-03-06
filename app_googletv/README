@@ -14,3 +14,7 @@ Author: Antonio Prada <toniprada@gmail.com>
 
 Libraries linked:
     - Left Bar Navigation Library: http://code.google.com/p/googletv-android-samples/
+    Modified from this library: /res/layouts/lefnav_bar_tab:
+    	@icon->layout_width = 14dp
+    	@icon->layout_height = 40dp
+    
