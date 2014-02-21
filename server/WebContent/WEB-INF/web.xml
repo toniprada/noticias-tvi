@@ -29,20 +29,10 @@
 		<description></description>
 		<display-name>GetContentFromSources</display-name>
 		<servlet-name>GetContentFromSources</servlet-name>
-		<servlet-class>es.upm.dit.gsi.cron.GetContentFromSources</servlet-class>
+		<servlet-class>es.upm.dit.gsi.cron.GetContentFromSourcesJob</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>GetContentFromSources</servlet-name>
 		<url-pattern>/getcontentfromsources</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<description></description>
-		<display-name>GetSocialFromContents</display-name>
-		<servlet-name>GetSocialFromContents</servlet-name>
-		<servlet-class>es.upm.dit.gsi.cron.GetSocialFromContents</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GetSocialFromContents</servlet-name>
-		<url-pattern>/getsocialfromcontents</url-pattern>
 	</servlet-mapping>
 </web-app>

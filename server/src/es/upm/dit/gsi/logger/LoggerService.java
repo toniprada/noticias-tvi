@@ -8,7 +8,7 @@ import es.upm.dit.gsi.logger.LoggerService;
 public class LoggerService {
 	
 	/**
-	 * Crea una traza con nivel debug. Recibe como parámetros el objeto
+	 * Crea una traza con nivel debug. Recibe como par??metros el objeto
 	 * que genera la traza y el mensaje a tracear: debug(this, "mensaje")  
 	 * @param clazz
 	 * @param message
@@ -24,7 +24,7 @@ public class LoggerService {
 		Logger.getLogger(clazz).debug(exception);
 	}
 	/**
-	 * Crea una traza con nivel info. Recibe como parámetros el objeto
+	 * Crea una traza con nivel info. Recibe como par??metros el objeto
 	 * que genera la traza y el mensaje a tracear: info(this, "mensaje")  
 	 * @param clazz
 	 * @param message
@@ -41,7 +41,7 @@ public class LoggerService {
 	}
 
 	/**
-	 * Crea una traza con nivel warn. Recibe como parámetros el objeto
+	 * Crea una traza con nivel warn. Recibe como par??metros el objeto
 	 * que genera la traza y el mensaje a tracear: warn(this, "mensaje")  
 	 * @param clazz
 	 * @param message
@@ -56,7 +56,7 @@ public class LoggerService {
 		Logger.getLogger(clazz).warn(exception);
 	}
 	/**
-	 * Crea una traza con nivel error. Recibe como parámetros el objeto
+	 * Crea una traza con nivel error. Recibe como par??metros el objeto
 	 * que genera la traza y el mensaje a tracear: error(this, "mensaje")  
 	 * @param clazz
 	 * @param message
@@ -78,7 +78,7 @@ public class LoggerService {
 		Logger.getLogger(clazz).error(exception);
 	}
 	/**
-	 * Crea una traza con nivel fatal. Recibe como parámetros el objeto
+	 * Crea una traza con nivel fatal. Recibe como par??metros el objeto
 	 * que genera la traza y el mensaje a tracear: fatal(this, "mensaje")  
 	 * @param clazz
 	 * @param message

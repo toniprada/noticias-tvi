@@ -8,7 +8,7 @@ import java.util.Properties;
 public class Logger {
 
     /**
-     * Nivel máximo de traza: no se traza nada.
+     * Nivel m??ximo de traza: no se traza nada.
      */
     public static final int OFF = Integer.MAX_VALUE;
 
@@ -48,7 +48,7 @@ public class Logger {
     public static final int FINEST = 300;
 
     /**
-     * Nivel mínimo de traza: se traza todo.
+     * Nivel m??nimo de traza: se traza todo.
      */
     public static final int ALL = Integer.MIN_VALUE;
 
@@ -154,7 +154,7 @@ public class Logger {
 
     /**
      * Crea un logger.
-     * Se trata de que para cada nombre el logger sea único.
+     * Se trata de que para cada nombre el logger sea ??nico.
      *
      * @param name Nombre del logger.
      * @return un objeto Logger
@@ -180,7 +180,7 @@ public class Logger {
     }
 
     /**
-     * Marca un nivel de aceptación de trazas.
+     * Marca un nivel de aceptaci??n de trazas.
      * Se imprimen por consola las trazas de nivel
      * mayor o igual que el marcado.
      *
@@ -324,10 +324,10 @@ public class Logger {
     }
 
     /**
-     * Chequeo de si una traza de un cierto nivel aparecería en consola.
+     * Chequeo de si una traza de un cierto nivel aparecer??a en consola.
      *
      * @param level Nivel por el que se pregunta.
-     * @return TRUE si aparecería en consola.
+     * @return TRUE si aparecer??a en consola.
      */
     public final boolean inConsole(int level) {
         return level >= console_level;
@@ -380,7 +380,7 @@ public class Logger {
      *
      * @param level     Nivel de la traza.
      * @param msg       Mensaje de la traza.
-     * @param throwable Excepción que se quiere trazar.
+     * @param throwable Excepci??n que se quiere trazar.
      */
     public final void log(int level, String msg, Throwable throwable) {
         if (level >= console_level) {
