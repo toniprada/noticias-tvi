@@ -11,8 +11,8 @@ import com.mysql.jdbc.PreparedStatement;
 
 import es.upm.dit.gsi.logger.Logger;
 
-public class DatabasePreference {
-	private static DatabaseHandler conf = DatabaseHandler.getConfiguration();
+public class PreferenceDB {
+	private static DatabaseHandler conf = DatabaseHandler.getInstance();
 	private static Connection con = conf.getDbCon();
 
 	private static final Logger LOGGER = Logger.getLogger("jdbc.Preference");

@@ -50,7 +50,7 @@ public class DatabaseHandler {
 	 * 
 	 * @return conf
 	 */
-	 public static DatabaseHandler getConfiguration(){
+	 public static DatabaseHandler getInstance(){
 	      if (conf == null)
 	          conf = new DatabaseHandler();
 	      return conf;

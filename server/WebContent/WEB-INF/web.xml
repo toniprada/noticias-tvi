@@ -19,7 +19,7 @@
 		<description></description>
 		<display-name>NoticiasTVi</display-name>
 		<servlet-name>NoticiasTVi</servlet-name>
-		<servlet-class>es.upm.dit.gsi.servlet.NoticiasTVi</servlet-class>
+		<servlet-class>es.upm.dit.gsi.NoticiasTVi</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>NoticiasTVi</servlet-name>

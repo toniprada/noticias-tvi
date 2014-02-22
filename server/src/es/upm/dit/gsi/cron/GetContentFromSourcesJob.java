@@ -15,7 +15,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
-import es.upm.dit.gsi.database.DatabaseContent;
+import es.upm.dit.gsi.database.ContentDB;
 import es.upm.dit.gsi.logger.Logger;
 
 /**
@@ -66,7 +66,7 @@ public class GetContentFromSourcesJob implements Job {
 							String content = entry.getDescription().getValue();
 							content = content.substring(0, content.indexOf("&#160"));
 
-							DatabaseContent.introduceContent(title, video, capture, time, content, author);
+							ContentDB.introduceContent(title, video, capture, time, content, author);
 
 							// Ejemplo para verlo en accion en
 							// http://localhost:8080/Recommender/getcontentfromsources:

@@ -1,4 +1,4 @@
-package es.upm.dit.gsi.servlet;
+package es.upm.dit.gsi;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,91 +32,105 @@ import es.upm.dit.gsi.model.Noticia;
 import es.upm.dit.gsi.model.Usuario;
 import es.upm.dit.gsi.util.Constants;
 import es.upm.dit.gsi.database.DatabaseHandler;
-import es.upm.dit.gsi.database.DatabaseContent;
-import es.upm.dit.gsi.database.DatabasePreference;
-import es.upm.dit.gsi.database.DatabaseUser;
+import es.upm.dit.gsi.database.ContentDB;
+import es.upm.dit.gsi.database.PreferenceDB;
+import es.upm.dit.gsi.database.UserDB;
 
 public class NoticiasTVi extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-
-	private static CDConfiguration cDConfiguration;
-	private JDBCDataModel jDBCDataModel;
-	private UserNeighborhood neighborhood;
-	private UserSimilarity similarity;
-	private Recommender recommender;
-	public static DatabaseHandler conf;
 	private static final Logger LOGGER = Logger.getLogger("servlet.Mahout");
 
+	private CDConfiguration cDConfiguration;
+	private JDBCDataModel jDBCDataModel;
+	private UserNeighborhood userNeighborhood;
+	private UserSimilarity userSimilarity;
+	private Recommender recommender;
+	public DatabaseHandler databaseHandler;
 	public Gson gson;
+	
 	public Conjunto conjunto;
 	public List<Noticia> noticiasList = new ArrayList<Noticia>();
 	public String have = "0";
-
-	/**
-	 * init del servlet
-	 * 
-	 * @throws ServletException
-	 *             si se produce un error
-	 */
+	
 	public void init() throws ServletException {
 		super.init();
-		conf = DatabaseHandler.getConfiguration();
-		jDBCDataModel = new MySQLJDBCDataModel(conf.getDataSource(), "preferenceTable", "user_id", "content_id",
-				"preference");
+		gson = new Gson();
+		databaseHandler = DatabaseHandler.getInstance();
+		jDBCDataModel = new MySQLJDBCDataModel(databaseHandler.getDataSource(), "preferenceTable", "user_id",
+				"content_id", "preference");
 		LOGGER.info("datamodel es " + jDBCDataModel);
 		try {
-			similarity = new PearsonCorrelationSimilarity(jDBCDataModel);
+			userSimilarity = new PearsonCorrelationSimilarity(jDBCDataModel);
 		} catch (TasteException e) {
 			e.printStackTrace();
 		}
-		neighborhood = new NearestNUserNeighborhood(2, similarity, jDBCDataModel);
-		recommender = new GenericUserBasedRecommender(jDBCDataModel, neighborhood, similarity);
-		gson = new Gson();
+		userNeighborhood = new NearestNUserNeighborhood(2, userSimilarity, jDBCDataModel);
+		recommender = new GenericUserBasedRecommender(jDBCDataModel, userNeighborhood, userSimilarity);
 	}
 
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		System.out.println("Esperando respuesta");
+		res.setCharacterEncoding("UTF-8");
+		if (req.getParameter("action").equals("getRecommendation")) {
+			getRecommendation(req, res);
+		} else if (req.getParameter("action").equals("getPopular")) {
+			getPopular(req, res);
+		} else if (req.getParameter("action").equals("getParrilla")) {
+			getParrilla(req, res);
+		} else if (req.getParameter("action").equals("getNews")) {
+			getNews(req, res);
+		} else if (req.getParameter("action").equals("setPreference")) {
+			setPreference(req, res);
+		} else if (req.getParameter("action").equals("removePreference")) {
+			removePreference(req, res);
+		} else if (req.getParameter("action").equals("newUser")) {
+			newUser(req, res);
+		} else if (req.getParameter("action").equals("removeUser")) {
+			removeUser(req, res);
+		} else if (req.getParameter("action").equals("getRatingOfContent")) {
+			getRatingOfContent(req, res);
+		} else if (req.getParameter("action").equals("getFavorites")) {
+			getFavorites(req, res);
+		} else if (req.getParameter("action").equals("getRandom")) {
+			getRandom(req, res);
+		}
+		res.setStatus(HttpServletResponse.SC_OK);
+	}
+	
 	/**
 	 * Genera la recomendación para un determinado usuario del servicio.
-	 * 
-	 * @param req
-	 * @param res
-	 * @throws ServletException
-	 *             si se produce algún error
-	 * @throws IOException
-	 *             si se produce algún error
 	 */
 	private void getRecommendation(HttpServletRequest req, HttpServletResponse res) throws ServletException,
 			IOException {
 		try {
 			PrintWriter out = res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
-			LOGGER.info("El usuario es: " + DatabaseUser.getnameOfUser(userId));
+			LOGGER.info("El usuario es: " + UserDB.getnameOfUser(userId));
 			Integer max = Constants.NUM_RESULTS;
 			noticiasList.clear();
 			if (userId != null) {
 				List<RecommendedItem> recommendations = recommender.recommend(userId, max);
 				if (recommendations.size() == 0) {
-					// Cuando no haya recomendaciones para el usuario no
-					// recomendamnos nada, darle lo más popular cuando no
-					// sabemos que recomendarte.
 					LOGGER.info("No hay recomendaciones para el usuario, le recomendamos lo más popular");
 					getPopular(req, res);
-					return;
-				}
-				for (int i = 0; i < recommendations.size(); i++) {
-					RecommendedItem recommendation = recommendations.get(i);
-					long contentId = recommendation.getItemID();
-					float estimation = recommender.estimatePreference(userId, contentId);
+				} else {
+					for (int i = 0; i < recommendations.size(); i++) {
+						RecommendedItem recommendation = recommendations.get(i);
+						long contentId = recommendation.getItemID();
+						float estimation = recommender.estimatePreference(userId, contentId);
 
-					Noticia noticia = new Noticia(Long.toString(contentId), DatabaseContent.getTitleOfContent(contentId),
-							DatabaseContent.getVideoOfContent(contentId), DatabaseContent.getCaptureOfContent(contentId),
-							DatabaseContent.getDateOfContent(contentId), DatabaseContent.getContent(contentId),
-							DatabaseContent.getAuthorOfContent(contentId), have, Float.toString(estimation));
+						Noticia noticia = new Noticia(Long.toString(contentId), ContentDB.getTitleOfContent(contentId),
+								ContentDB.getVideoOfContent(contentId), ContentDB.getCaptureOfContent(contentId),
+								ContentDB.getDateOfContent(contentId), ContentDB.getContent(contentId),
+								ContentDB.getAuthorOfContent(contentId), have, Float.toString(estimation));
 
-					noticiasList.add(noticia);
+						noticiasList.add(noticia);
+					}
+					conjunto = new Conjunto(noticiasList);
+					String ans = (String) gson.toJson(conjunto).subSequence(12, gson.toJson(conjunto).length() - 1);
+					out.print(ans);
 				}
-				conjunto = new Conjunto(noticiasList);
-				String ans = (String) gson.toJson(conjunto).subSequence(12, gson.toJson(conjunto).length() - 1);
-				out.print(ans);
 			} else {
 				LOGGER.warning("No se puede dar recomendación ya que no existe el usuario");
 			}
@@ -143,12 +157,12 @@ public class NoticiasTVi extends HttpServlet {
 			noticiasList.clear();
 			Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
 			int popular = Constants.NUM_RESULTS;
-			HashMap<Long, Float> averageRatings = DatabasePreference.averageRatings();
+			HashMap<Long, Float> averageRatings = PreferenceDB.averageRatings();
 			Object[] idsContents = averageRatings.keySet().toArray();
 			if (averageRatings.size() < popular) {
 				popular = averageRatings.size();
 				for (int j = 0; j < averageRatings.size(); j++) {
-					if (DatabasePreference.numVoteOfContent((Long) idsContents[j]) < Constants.MIN_NUM_VOTE)
+					if (PreferenceDB.numVoteOfContent((Long) idsContents[j]) < Constants.MIN_NUM_VOTE)
 						popular = popular - 1;
 				}
 			}
@@ -162,7 +176,7 @@ public class NoticiasTVi extends HttpServlet {
 
 			for (int i = 0; i < idsContents.length; i++) {
 				for (int k = 0; k < popular; k++) {
-					if (DatabasePreference.numVoteOfContent((Long) idsContents[i]) >= Constants.MIN_NUM_VOTE) {
+					if (PreferenceDB.numVoteOfContent((Long) idsContents[i]) >= Constants.MIN_NUM_VOTE) {
 						noPopular = false;
 						if ((averageRatings.get((Long) idsContents[i])) != null) {
 							if (averageRatings.get((Long) idsContents[i]) > value[k]) {
@@ -175,7 +189,7 @@ public class NoticiasTVi extends HttpServlet {
 								break;
 							}
 							if (averageRatings.get((Long) idsContents[i]) == value[k]
-									&& DatabasePreference.numVoteOfContent((Long) idsContents[i]) > DatabasePreference
+									&& PreferenceDB.numVoteOfContent((Long) idsContents[i]) > PreferenceDB
 											.numVoteOfContent(id[k])) {
 								for (int h = popular - 1; h > k; h--) {
 									id[h] = id[h - 1];
@@ -198,10 +212,10 @@ public class NoticiasTVi extends HttpServlet {
 				if (jDBCDataModel.getPreferenceValue(userId, id[j]) != null)
 					have = "1";
 
-				Noticia not = new Noticia(Long.toString(id[j]), DatabaseContent.getTitleOfContent(id[j]),
-						DatabaseContent.getVideoOfContent(id[j]), DatabaseContent.getCaptureOfContent(id[j]),
-						DatabaseContent.getDateOfContent(id[j]), DatabaseContent.getContent(id[j]),
-						DatabaseContent.getAuthorOfContent(id[j]), have, "");
+				Noticia not = new Noticia(Long.toString(id[j]), ContentDB.getTitleOfContent(id[j]),
+						ContentDB.getVideoOfContent(id[j]), ContentDB.getCaptureOfContent(id[j]),
+						ContentDB.getDateOfContent(id[j]), ContentDB.getContent(id[j]),
+						ContentDB.getAuthorOfContent(id[j]), have, "");
 
 				noticiasList.add(not);
 				have = "0";
@@ -233,7 +247,7 @@ public class NoticiasTVi extends HttpServlet {
 		HashMap<String, Content> offer = new HashMap<String, Content>();
 		HashMap<String, Integer> preferences = new HashMap<String, Integer>();
 		Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
-		Vector<Long> contentsId = DatabaseContent.getContentsIds();
+		Vector<Long> contentsId = ContentDB.getContentsIds();
 		for (int i = 0; i < contentsId.size(); i++) {
 			String id = contentsId.get(i).toString();
 			Content cnt = new Content();
@@ -242,7 +256,7 @@ public class NoticiasTVi extends HttpServlet {
 			offer.put(id, cnt);
 		}
 		for (int j = 0; j < offer.size(); j++) {
-			preferences.put(contentsId.get(j).toString(), DatabasePreference.userRateToContent(userId, contentsId.get(j)));
+			preferences.put(contentsId.get(j).toString(), PreferenceDB.userRateToContent(userId, contentsId.get(j)));
 		}
 		cDConfiguration = new CDConfiguration();
 		cDConfiguration.setMaxSlots(Constants.SLOTS_PARRILLA);
@@ -256,10 +270,10 @@ public class NoticiasTVi extends HttpServlet {
 		for (int k = 0; k < parrilla.size(); k++) {
 			long contentId = Long.parseLong(parrilla.get(k).getContentID());
 
-			Noticia not = new Noticia(Long.toString(contentId), DatabaseContent.getTitleOfContent(contentId),
-					DatabaseContent.getVideoOfContent(contentId), DatabaseContent.getCaptureOfContent(contentId),
-					DatabaseContent.getDateOfContent(contentId), DatabaseContent.getContent(contentId),
-					DatabaseContent.getAuthorOfContent(contentId), have, "");
+			Noticia not = new Noticia(Long.toString(contentId), ContentDB.getTitleOfContent(contentId),
+					ContentDB.getVideoOfContent(contentId), ContentDB.getCaptureOfContent(contentId),
+					ContentDB.getDateOfContent(contentId), ContentDB.getContent(contentId),
+					ContentDB.getAuthorOfContent(contentId), have, "");
 
 			noticiasList.add(not);
 		}
@@ -282,16 +296,16 @@ public class NoticiasTVi extends HttpServlet {
 		try {
 			PrintWriter out = res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
-			long[] ids = DatabaseContent.getMoreRecients(Constants.NUM_RESULTS);
+			long[] ids = ContentDB.getMoreRecients(Constants.NUM_RESULTS);
 			noticiasList.clear();
 			for (int k = 0; k < ids.length; k++) {
 				if (jDBCDataModel.getPreferenceValue(userId, ids[k]) != null)
 					have = "1";
 
-				Noticia not = new Noticia(Long.toString(ids[k]), DatabaseContent.getTitleOfContent(ids[k]),
-						DatabaseContent.getVideoOfContent(ids[k]), DatabaseContent.getCaptureOfContent(ids[k]),
-						DatabaseContent.getDateOfContent(ids[k]), DatabaseContent.getContent(ids[k]),
-						DatabaseContent.getAuthorOfContent(ids[k]), have, "");
+				Noticia not = new Noticia(Long.toString(ids[k]), ContentDB.getTitleOfContent(ids[k]),
+						ContentDB.getVideoOfContent(ids[k]), ContentDB.getCaptureOfContent(ids[k]),
+						ContentDB.getDateOfContent(ids[k]), ContentDB.getContent(ids[k]),
+						ContentDB.getAuthorOfContent(ids[k]), have, "");
 
 				noticiasList.add(not);
 				have = "0";
@@ -322,14 +336,14 @@ public class NoticiasTVi extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
 			Long contentId = Long.parseLong(req.getParameter(Constants.CONTENT));
-			String nameOfContent = DatabaseContent.getTitleOfContent(contentId);
+			String nameOfContent = ContentDB.getTitleOfContent(contentId);
 			float preference = new Float(req.getParameter(Constants.PREFERENCE_PARAM));
-			if (DatabasePreference.userHaveContent(userId, contentId)) {
+			if (PreferenceDB.userHaveContent(userId, contentId)) {
 				jDBCDataModel.removePreference(contentId, userId);
-				LOGGER.info("El usuario " + DatabaseUser.getnameOfUser(userId)
+				LOGGER.info("El usuario " + UserDB.getnameOfUser(userId)
 						+ " ha modificado la valoraci??n del contenido " + nameOfContent + " a " + preference);
 			} else {
-				LOGGER.info("El usuario " + DatabaseUser.getnameOfUser(userId) + " a??ade un valoraci??n de " + preference
+				LOGGER.info("El usuario " + UserDB.getnameOfUser(userId) + " a??ade un valoraci??n de " + preference
 						+ " al contenido " + nameOfContent);
 			}
 			jDBCDataModel.setPreference(contentId, userId, preference);
@@ -358,11 +372,11 @@ public class NoticiasTVi extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
 			Long contentId = Long.parseLong(req.getParameter(Constants.CONTENT));
-			String nameOfContent = DatabaseContent.getTitleOfContent(contentId);
+			String nameOfContent = ContentDB.getTitleOfContent(contentId);
 			if (userId != null && contentId != null) {
-				if (DatabasePreference.userHaveContent(userId, contentId)) {
+				if (PreferenceDB.userHaveContent(userId, contentId)) {
 					jDBCDataModel.removePreference(contentId, userId);
-					LOGGER.info("Eliminamos la valoraci??n del usuario " + DatabaseUser.getnameOfUser(userId)
+					LOGGER.info("Eliminamos la valoraci??n del usuario " + UserDB.getnameOfUser(userId)
 							+ " para el contenido " + nameOfContent);
 				}
 			} else {
@@ -391,8 +405,8 @@ public class NoticiasTVi extends HttpServlet {
 		try {
 			PrintWriter out = res.getWriter();
 			String name = req.getParameter(Constants.NAME_USER);
-			DatabaseUser.introduceUser(name);
-			long id = DatabaseUser.getUserId(name);
+			UserDB.introduceUser(name);
+			long id = UserDB.getUserId(name);
 			Usuario u = new Usuario(name, Long.toString(id));
 			out.print(gson.toJson(u));
 		} catch (Exception e) {
@@ -416,10 +430,10 @@ public class NoticiasTVi extends HttpServlet {
 	private void removeUser(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			PrintWriter out = res.getWriter();
-			DatabasePreference.removePreferencesUser(Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER)));
-			if (DatabaseUser.getnameOfUser(Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER))) == null)
+			PreferenceDB.removePreferencesUser(Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER)));
+			if (UserDB.getnameOfUser(Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER))) == null)
 				out.print("ok");
-			DatabaseUser.removeUser(Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER)));
+			UserDB.removeUser(Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER)));
 			out.print("ok");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -446,19 +460,19 @@ public class NoticiasTVi extends HttpServlet {
 			Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
 			PrintWriter out = res.getWriter();
 			if (userId != null) {
-				LOGGER.info("Los contenidos valorados por el usuario " + DatabaseUser.getnameOfUser(userId) + " son:");
+				LOGGER.info("Los contenidos valorados por el usuario " + UserDB.getnameOfUser(userId) + " son:");
 				PreferenceArray preferencesUser = jDBCDataModel.getPreferencesFromUser(userId);
 				for (int i = 0; i < preferencesUser.length(); i++) {
 					have = "1";
-					String content = DatabaseContent.getTitleOfContent(preferencesUser.getItemID(i));
+					String content = ContentDB.getTitleOfContent(preferencesUser.getItemID(i));
 					float value = preferencesUser.getValue(i);
 
-					Noticia not = new Noticia(Long.toString(DatabaseContent.getContentId(content)), content,
-							DatabaseContent.getVideoOfContent(preferencesUser.getItemID(i)),
-							DatabaseContent.getCaptureOfContent(preferencesUser.getItemID(i)),
-							DatabaseContent.getDateOfContent(preferencesUser.getItemID(i)),
-							DatabaseContent.getContent(preferencesUser.getItemID(i)),
-							DatabaseContent.getAuthorOfContent(preferencesUser.getItemID(i)), have, Float.toString(value));
+					Noticia not = new Noticia(Long.toString(ContentDB.getContentId(content)), content,
+							ContentDB.getVideoOfContent(preferencesUser.getItemID(i)),
+							ContentDB.getCaptureOfContent(preferencesUser.getItemID(i)),
+							ContentDB.getDateOfContent(preferencesUser.getItemID(i)),
+							ContentDB.getContent(preferencesUser.getItemID(i)),
+							ContentDB.getAuthorOfContent(preferencesUser.getItemID(i)), have, Float.toString(value));
 
 					noticiasList.add(not);
 
@@ -494,11 +508,11 @@ public class NoticiasTVi extends HttpServlet {
 			Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
 			Long contentId = Long.parseLong(req.getParameter(Constants.CONTENT));
 			if (userId != null) {
-				if (DatabasePreference.userHaveContent(userId, contentId)) {
+				if (PreferenceDB.userHaveContent(userId, contentId)) {
 					out.print("[");
 					float rating = jDBCDataModel.getPreferenceValue(userId, contentId);
-					LOGGER.info("La valoraci??n al contenido " + DatabaseContent.getTitleOfContent(contentId)
-							+ " por el usuario " + DatabaseUser.getnameOfUser(userId) + " es:" + rating);
+					LOGGER.info("La valoraci??n al contenido " + ContentDB.getTitleOfContent(contentId)
+							+ " por el usuario " + UserDB.getnameOfUser(userId) + " es:" + rating);
 					out.print(rating);
 					out.print("]");
 				} else {
@@ -531,21 +545,21 @@ public class NoticiasTVi extends HttpServlet {
 			Random random = new Random();
 			long contentId;
 			noticiasList.clear();
-			int num = DatabaseContent.getNumContents();
+			int num = ContentDB.getNumContents();
 			PrintWriter out = res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
 			for (int k = Constants.NUM_RESULTS - 50; k < Constants.NUM_RESULTS; k++) {
 				contentId = (long) (random.nextDouble() * num);
-				while (DatabaseContent.getTitleOfContent(contentId) == "") {
+				while (ContentDB.getTitleOfContent(contentId) == "") {
 					contentId = (long) (random.nextDouble() * num);
 				}
 				if (jDBCDataModel.getPreferenceValue(userId, contentId) != null)
 					rate = "1";
 
-				Noticia not = new Noticia(Long.toString(contentId), DatabaseContent.getTitleOfContent(contentId),
-						DatabaseContent.getVideoOfContent(contentId), DatabaseContent.getCaptureOfContent(contentId),
-						DatabaseContent.getDateOfContent(contentId), DatabaseContent.getContent(contentId),
-						DatabaseContent.getAuthorOfContent(contentId), rate, "");
+				Noticia not = new Noticia(Long.toString(contentId), ContentDB.getTitleOfContent(contentId),
+						ContentDB.getVideoOfContent(contentId), ContentDB.getCaptureOfContent(contentId),
+						ContentDB.getDateOfContent(contentId), ContentDB.getContent(contentId),
+						ContentDB.getAuthorOfContent(contentId), rate, "");
 
 				noticiasList.add(not);
 
@@ -558,43 +572,4 @@ public class NoticiasTVi extends HttpServlet {
 		}
 	}
 
-	/**
-	 * Ejecuta la acción solicitada por el cliente.
-	 * 
-	 * @param req
-	 * @param res
-	 * @throws ServletException
-	 *             si se produce algún error
-	 * @throws IOException
-	 *             si se produce algún error
-	 */
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("Esperando respuesta");
-		res.setCharacterEncoding("UTF-8");
-		if (req.getParameter("action").equals("getRecommendation")) {
-			getRecommendation(req, res);
-		} else if (req.getParameter("action").equals("getPopular")) {
-			getPopular(req, res);
-		} else if (req.getParameter("action").equals("getParrilla")) {
-			getParrilla(req, res);
-		} else if (req.getParameter("action").equals("getNews")) {
-			getNews(req, res);
-		} else if (req.getParameter("action").equals("setPreference")) {
-			setPreference(req, res);
-		} else if (req.getParameter("action").equals("removePreference")) {
-			removePreference(req, res);
-		} else if (req.getParameter("action").equals("newUser")) {
-			newUser(req, res);
-		} else if (req.getParameter("action").equals("removeUser")) {
-			removeUser(req, res);
-		} else if (req.getParameter("action").equals("getRatingOfContent")) {
-			getRatingOfContent(req, res);
-		} else if (req.getParameter("action").equals("getFavorites")) {
-			getFavorites(req, res);
-		} else if (req.getParameter("action").equals("getRandom")) {
-			getRandom(req, res);
-		}
-		res.setStatus(HttpServletResponse.SC_OK);
-	}
-	
 }
