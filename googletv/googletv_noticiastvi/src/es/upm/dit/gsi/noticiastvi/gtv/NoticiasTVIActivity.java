@@ -112,7 +112,7 @@ public class NoticiasTVIActivity extends Activity {
 //		ActionBar.Tab tabStream = bar.newTab().setText(getText(R.string.stream));
 		ActionBar.Tab tabNew = bar.newTab().setText(getText(R.string.news));
 		ActionBar.Tab tabRecommendation = bar.newTab().setText(getText(R.string.recommendation));
-		ActionBar.Tab tabSocial = bar.newTab().setText(getText(R.string.social));
+		//ActionBar.Tab tabSocial = bar.newTab().setText(getText(R.string.social));
 		ActionBar.Tab tabFavorite = bar.newTab().setText(getText(R.string.favorites));
 		ActionBar.Tab tabUser = bar.newTab().setText(mAccount.getNombre());
 		View v = getLayoutInflater().inflate(R.layout.user_tab, null);
@@ -127,12 +127,12 @@ public class NoticiasTVIActivity extends Activity {
 //		Fragment fragmentParrilla = new ParrillaFragment(mContext, mAccount);
 		Fragment fragmentNew = new NewFragment(mContext, mAccount);
 		Fragment fragmentRecommendation = new RecommendationFragment(mContext, mAccount);
-		Fragment fragmentSocial = new SocialFragment(mContext, mAccount);
+		//Fragment fragmentSocial = new SocialFragment(mContext, mAccount);
 		Fragment fragmentFavorite = new FavoriteFragment(mContext, mAccount);
 		tabPopular.setTabListener(new MyTabListener(fragmentPopular));
 //		tabStream.setTabListener(new MyTabListener(fragmentParrilla));
 		tabNew.setTabListener(new MyTabListener(fragmentNew));
-		tabSocial.setTabListener(new MyTabListener(fragmentSocial));
+		//tabSocial.setTabListener(new MyTabListener(fragmentSocial));
 		tabRecommendation.setTabListener(new MyTabListener(fragmentRecommendation));
 		tabFavorite.setTabListener(new MyTabListener(fragmentFavorite));
 		tabUser.setTabListener( new ActionBar.TabListener() {
@@ -158,7 +158,7 @@ public class NoticiasTVIActivity extends Activity {
 		bar.addTab(tabPopular);
 //		bar.addTab(tabStream);
 		bar.addTab(tabRecommendation);
-		bar.addTab(tabSocial);
+		//bar.addTab(tabSocial);
 		bar.addTab(tabFavorite);
 		bar.addTab(tabUser);
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

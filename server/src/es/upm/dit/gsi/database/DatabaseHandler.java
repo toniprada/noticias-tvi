@@ -12,10 +12,10 @@ public class DatabaseHandler {
 	private Connection dbCon;
 	private MysqlDataSource dataSource;
 	private static DatabaseHandler conf;
-	public static String url = "jdbc:mysql://localhost:3306/noticiastvi";
+	public static String url = "jdbc:mysql://localhost:3306/NoticiasTVi";
 	public static String driver = "com.mysql.jdbc.Driver";
 	public static String servername = "localhost";
-	public static String dbname = "noticiastvi";
+	public static String dbname = "NoticiasTVi";
 	public static String user = "root";
 	public static String pass = "toor";	
 	

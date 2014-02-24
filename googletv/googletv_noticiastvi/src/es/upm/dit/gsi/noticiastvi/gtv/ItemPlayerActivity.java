@@ -125,7 +125,7 @@ public class ItemPlayerActivity extends Activity implements OnClickListener, OnC
 			ProgressDialog pd = ProgressDialog.show(mContext, mContext
 					.getText(R.string.please_wait), mContext
 					.getText(R.string.getting_videos), true, false);
-	        mVideoView.setVideoPath(mItemList.getSelectedItem().getVideo());
+	        mVideoView.setVideoPath(mItemList.getSelectedItem().getVideo().replace(".flv", ".mp4"));
 	        mNewsView.setVisibility(View.GONE);
 	        mVideoView.setVisibility(View.VISIBLE);
 	        mInfoPanel.enable();
