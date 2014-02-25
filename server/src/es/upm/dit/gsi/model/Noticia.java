@@ -11,6 +11,7 @@ public class Noticia {
 	public String have;
 	public String estimacion;
 	public String social;
+	public String categorias;
 	
 	public Noticia() {
 	}

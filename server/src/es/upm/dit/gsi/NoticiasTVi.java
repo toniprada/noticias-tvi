@@ -341,12 +341,12 @@ public class NoticiasTVi extends HttpServlet {
 			if (PreferenceDB.userHaveContent(userId, contentId)) {
 				jDBCDataModel.removePreference(contentId, userId);
 				LOGGER.info("El usuario " + UserDB.getnameOfUser(userId)
-						+ " ha modificado la valoraci??n del contenido " + nameOfContent + " a " + preference);
+						+ " ha modificado la valoración del contenido " + nameOfContent + " a " + preference);
 			} else {
-				LOGGER.info("El usuario " + UserDB.getnameOfUser(userId) + " a??ade un valoraci??n de " + preference
+				LOGGER.info("El usuario " + UserDB.getnameOfUser(userId) + " añade un valoración de " + preference
 						+ " al contenido " + nameOfContent);
 			}
-			jDBCDataModel.setPreference(contentId, userId, preference);
+			jDBCDataModel.setPreference(userId, contentId, preference);
 			out.print("ok");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -376,11 +376,11 @@ public class NoticiasTVi extends HttpServlet {
 			if (userId != null && contentId != null) {
 				if (PreferenceDB.userHaveContent(userId, contentId)) {
 					jDBCDataModel.removePreference(contentId, userId);
-					LOGGER.info("Eliminamos la valoraci??n del usuario " + UserDB.getnameOfUser(userId)
+					LOGGER.info("Eliminamos la valoración del usuario " + UserDB.getnameOfUser(userId)
 							+ " para el contenido " + nameOfContent);
 				}
 			} else {
-				LOGGER.warning("Usuario o objeto no encontrado");
+				LOGGER.warning("Usuario u objeto no encontrado");
 			}
 			out.print("ok");
 		} catch (Exception e) {
