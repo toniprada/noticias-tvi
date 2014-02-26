@@ -3,22 +3,23 @@ package es.upm.dit.gsi.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import org.mariadb.jdbc.MySQLDataSource;
 
 import es.upm.dit.gsi.logger.Logger;
 
 public class DatabaseHandler {
 	private Connection dbCon;
-	private MysqlDataSource dataSource;
+	private MySQLDataSource dataSource;
 	private static DatabaseHandler conf;
-	public static String url = "jdbc:mysql://localhost:3306/NoticiasTVi";
-	public static String driver = "com.mysql.jdbc.Driver";
-	public static String servername = "localhost";
-	public static String dbname = "NoticiasTVi";
-	public static String user = "root";
-	public static String pass = "toor";	
-	
+	public static String driver = "org.mariadb.jdbc.Driver";
+	public static String servername = "demos.gsi.dit.upm.es";
+	public static String dbname = "tprada";
+	public static String user = "toni";
+	public static String pass = "m4r14DB!TONI";	
+	public static String url = "jdbc:mysql://" + servername + ":3306/" + dbname;
+
 	
 	private static final Logger LOGGER = Logger.getLogger("connection.Configuration");
 	
@@ -29,7 +30,7 @@ public class DatabaseHandler {
 	 *  
 	 */
 	private DatabaseHandler(){
-		dataSource = new MysqlDataSource();
+		dataSource = new MySQLDataSource();
 		dataSource.setServerName(servername);
 		dataSource.setDatabaseName(dbname);
 		dataSource.setUser(user);
@@ -42,6 +43,41 @@ public class DatabaseHandler {
 		}
 		setDbCon(url, user, pass);
 		LOGGER.info("Se ha abierto la conexión con la base de datos");
+		try {
+			createTables();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void createTables() throws SQLException{
+	    Statement stmt = dbCon.createStatement();
+		String sqlCreate = 
+			"CREATE TABLE IF NOT EXISTS `" + dbname + "`.`contents` (" +
+				"`id` bigint(20) NOT NULL AUTO_INCREMENT," +
+		    	"`title` tinytext NOT NULL," +
+		    	"`video` text NOT NULL," +
+		    	"`capture` text NOT NULL," +
+		    	"`time` tinytext NOT NULL," +
+		    	"`content` longtext NOT NULL," +
+		    	"`author` tinytext NOT NULL," +
+		    	"PRIMARY KEY (`id`)" +
+		    ") ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+		stmt.execute(sqlCreate);
+		sqlCreate = 
+			"CREATE TABLE IF NOT EXISTS `" + dbname + "`.`users` (" +
+				"`id` bigint(20) NOT NULL AUTO_INCREMENT," +
+				"`identifier` tinytext NOT NULL," +			    	
+				"PRIMARY KEY (`id`)" +
+			") ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+		stmt.execute(sqlCreate);
+		sqlCreate = 
+			"CREATE TABLE IF NOT EXISTS `" + dbname + "`.`preferenceTable` (" +
+				"`user_id` bigint(20) NOT NULL," +
+				"`content_id` bigint(20) NOT NULL," +
+				"`preference` float NOT NULL" +			
+			") ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+		stmt.execute(sqlCreate);
 	}
 	
 	/**
@@ -72,7 +108,7 @@ public class DatabaseHandler {
 	 * 
 	 * @return dataSource
 	 */
-	public MysqlDataSource getDataSource(){
+	public MySQLDataSource getDataSource(){
 		return dataSource;
 	}
 	

@@ -1,10 +1,8 @@
 package es.upm.dit.gsi.database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import com.mysql.jdbc.PreparedStatement;
-
 
 //import es.upm.dit.gsi.h2.Configuration;
 import es.upm.dit.gsi.logger.Logger;
