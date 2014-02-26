@@ -35,7 +35,7 @@ CREATE TABLE  `NoticiasTVi`.`contents` (
   `content` longtext NOT NULL,
   `author` tinytext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 --
@@ -46,8 +46,9 @@ DROP TABLE IF EXISTS `NoticiasTVi`.`preferenceTable`;
 CREATE TABLE  `NoticiasTVi`.`preferenceTable` (
   `user_id` bigint(20) NOT NULL,
   `content_id` bigint(20) NOT NULL,
-  `preference` float NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `preference` float NOT NULL,
+  `timestamp` bigint(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 --
@@ -59,7 +60,7 @@ CREATE TABLE  `NoticiasTVi`.`users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `identifier` tinytext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `NoticiasTVi`.`users`

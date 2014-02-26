@@ -55,7 +55,9 @@ public class GetContentFromSourcesJob implements Job {
 						video = url;
 					}
 				}
-				ContentDB.introduceContent(title, video, capture, time, content, author);
+				if (!video.equals("") && !capture.equals("")) {
+					ContentDB.introduceContent(title, video, capture, time, content, author);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

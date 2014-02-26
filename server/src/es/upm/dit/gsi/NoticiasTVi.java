@@ -8,47 +8,53 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.mahout.cf.taste.common.TasteException;
+import org.apache.mahout.cf.taste.impl.model.MySQLJDBCIDMigrator;
 import org.apache.mahout.cf.taste.impl.model.jdbc.MySQLJDBCDataModel;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
+import org.apache.mahout.cf.taste.impl.recommender.GenericBooleanPrefItemBasedRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.TanimotoCoefficientSimilarity;
 import org.apache.mahout.cf.taste.model.JDBCDataModel;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
 import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
+import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
-import org.apache.mahout.cf.taste.common.TasteException;
 
 import com.google.gson.Gson;
 
-import contentDiscriminator.*;
+import contentDiscriminator.CDConfiguration;
+import contentDiscriminator.Content;
+import contentDiscriminator.ContentDiscriminator;
+import es.upm.dit.gsi.database.ContentDB;
+import es.upm.dit.gsi.database.DatabaseHandler;
+import es.upm.dit.gsi.database.PreferenceDB;
+import es.upm.dit.gsi.database.UserDB;
 import es.upm.dit.gsi.logger.Logger;
 import es.upm.dit.gsi.model.Conjunto;
 import es.upm.dit.gsi.model.Noticia;
 import es.upm.dit.gsi.model.Usuario;
+import es.upm.dit.gsi.recommender.MyRecommender;
 import es.upm.dit.gsi.util.Constants;
-import es.upm.dit.gsi.database.DatabaseHandler;
-import es.upm.dit.gsi.database.ContentDB;
-import es.upm.dit.gsi.database.PreferenceDB;
-import es.upm.dit.gsi.database.UserDB;
 
 public class NoticiasTVi extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger("servlet.Mahout");
 
-	private CDConfiguration cDConfiguration;
-	private JDBCDataModel jDBCDataModel;
-	private UserNeighborhood userNeighborhood;
-	private UserSimilarity userSimilarity;
-	private Recommender recommender;
+
 	public DatabaseHandler databaseHandler;
-	public Gson gson;
+	public MyRecommender myRecommender;
 	
+	public Gson gson;
 	public Conjunto conjunto;
 	public List<Noticia> noticiasList = new ArrayList<Noticia>();
 	public String have = "0";
@@ -57,16 +63,7 @@ public class NoticiasTVi extends HttpServlet {
 		super.init();
 		gson = new Gson();
 		databaseHandler = DatabaseHandler.getInstance();
-		jDBCDataModel = new MySQLJDBCDataModel(databaseHandler.getDataSource(), "preferenceTable", "user_id",
-				"content_id", "preference");
-		LOGGER.info("datamodel es " + jDBCDataModel);
-		try {
-			userSimilarity = new PearsonCorrelationSimilarity(jDBCDataModel);
-		} catch (TasteException e) {
-			e.printStackTrace();
-		}
-		userNeighborhood = new NearestNUserNeighborhood(2, userSimilarity, jDBCDataModel);
-		recommender = new GenericUserBasedRecommender(jDBCDataModel, userNeighborhood, userSimilarity);
+		myRecommender = new MyRecommender();
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -76,8 +73,6 @@ public class NoticiasTVi extends HttpServlet {
 			getRecommendation(req, res);
 		} else if (req.getParameter("action").equals("getPopular")) {
 			getPopular(req, res);
-		} else if (req.getParameter("action").equals("getParrilla")) {
-			getParrilla(req, res);
 		} else if (req.getParameter("action").equals("getNews")) {
 			getNews(req, res);
 		} else if (req.getParameter("action").equals("setPreference")) {
@@ -107,10 +102,9 @@ public class NoticiasTVi extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
 			LOGGER.info("El usuario es: " + UserDB.getnameOfUser(userId));
-			Integer max = Constants.NUM_RESULTS;
 			noticiasList.clear();
 			if (userId != null) {
-				List<RecommendedItem> recommendations = recommender.recommend(userId, max);
+				List<RecommendedItem> recommendations = myRecommender.getRecommendations(userId);
 				if (recommendations.size() == 0) {
 					LOGGER.info("No hay recomendaciones para el usuario, le recomendamos lo más popular");
 					getPopular(req, res);
@@ -118,13 +112,11 @@ public class NoticiasTVi extends HttpServlet {
 					for (int i = 0; i < recommendations.size(); i++) {
 						RecommendedItem recommendation = recommendations.get(i);
 						long contentId = recommendation.getItemID();
-						float estimation = recommender.estimatePreference(userId, contentId);
-
+						float estimation = myRecommender.estimatePreference(userId, contentId);
 						Noticia noticia = new Noticia(Long.toString(contentId), ContentDB.getTitleOfContent(contentId),
 								ContentDB.getVideoOfContent(contentId), ContentDB.getCaptureOfContent(contentId),
 								ContentDB.getDateOfContent(contentId), ContentDB.getContent(contentId),
 								ContentDB.getAuthorOfContent(contentId), have, Float.toString(estimation));
-
 						noticiasList.add(noticia);
 					}
 					conjunto = new Conjunto(noticiasList);
@@ -209,7 +201,7 @@ public class NoticiasTVi extends HttpServlet {
 				return;
 			}
 			for (int j = 0; j < popular; j++) {
-				if (jDBCDataModel.getPreferenceValue(userId, id[j]) != null)
+				if (myRecommender.getPreferenceValue(userId, id[j]) != null)
 					have = "1";
 
 				Noticia not = new Noticia(Long.toString(id[j]), ContentDB.getTitleOfContent(id[j]),
@@ -230,59 +222,6 @@ public class NoticiasTVi extends HttpServlet {
 	}
 
 	/**
-	 * Devuelve un canal personalizado de contenidos al cliente.
-	 * 
-	 * @param req
-	 *            ,HttpServletRequest
-	 * @param res
-	 *            ,HttpServletResponse
-	 * @throws ServletException
-	 *             si se produce algún error
-	 * @throws IOException
-	 *             si se produce algún error
-	 */
-	private void getParrilla(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		PrintWriter out = res.getWriter();
-		noticiasList.clear();
-		HashMap<String, Content> offer = new HashMap<String, Content>();
-		HashMap<String, Integer> preferences = new HashMap<String, Integer>();
-		Long userId = Long.parseLong(req.getParameter(Constants.USER_IDENTIFIER));
-		Vector<Long> contentsId = ContentDB.getContentsIds();
-		for (int i = 0; i < contentsId.size(); i++) {
-			String id = contentsId.get(i).toString();
-			Content cnt = new Content();
-			cnt.setContentID(id);
-			cnt.setSourceChannel("NA");
-			offer.put(id, cnt);
-		}
-		for (int j = 0; j < offer.size(); j++) {
-			preferences.put(contentsId.get(j).toString(), PreferenceDB.userRateToContent(userId, contentsId.get(j)));
-		}
-		cDConfiguration = new CDConfiguration();
-		cDConfiguration.setMaxSlots(Constants.SLOTS_PARRILLA);
-		cDConfiguration.setMaxPopulation(Constants.POPULATION_PARILLA);
-		ContentDiscriminator object = new ContentDiscriminator();
-		List<Content> parrilla = object.launch(offer, preferences, cDConfiguration);
-		if (parrilla.size() == 0) {
-			getPopular(req, res);
-			return;
-		}
-		for (int k = 0; k < parrilla.size(); k++) {
-			long contentId = Long.parseLong(parrilla.get(k).getContentID());
-
-			Noticia not = new Noticia(Long.toString(contentId), ContentDB.getTitleOfContent(contentId),
-					ContentDB.getVideoOfContent(contentId), ContentDB.getCaptureOfContent(contentId),
-					ContentDB.getDateOfContent(contentId), ContentDB.getContent(contentId),
-					ContentDB.getAuthorOfContent(contentId), have, "");
-
-			noticiasList.add(not);
-		}
-		conjunto = new Conjunto(noticiasList);
-		String ans = (String) gson.toJson(conjunto).subSequence(12, gson.toJson(conjunto).length() - 1);
-		out.print(ans);
-	}
-
-	/**
 	 * Nos devuelve las noticias más recientes en el tiempo.
 	 * 
 	 * @param req
@@ -299,7 +238,7 @@ public class NoticiasTVi extends HttpServlet {
 			long[] ids = ContentDB.getMoreRecients(Constants.NUM_RESULTS);
 			noticiasList.clear();
 			for (int k = 0; k < ids.length; k++) {
-				if (jDBCDataModel.getPreferenceValue(userId, ids[k]) != null)
+				if (myRecommender.getPreferenceValue(userId, ids[k]) != null)
 					have = "1";
 
 				Noticia not = new Noticia(Long.toString(ids[k]), ContentDB.getTitleOfContent(ids[k]),
@@ -339,14 +278,14 @@ public class NoticiasTVi extends HttpServlet {
 			String nameOfContent = ContentDB.getTitleOfContent(contentId);
 			float preference = new Float(req.getParameter(Constants.PREFERENCE_PARAM));
 			if (PreferenceDB.userHaveContent(userId, contentId)) {
-				jDBCDataModel.removePreference(contentId, userId);
+				myRecommender.removePreference(contentId, userId);
 				LOGGER.info("El usuario " + UserDB.getnameOfUser(userId)
 						+ " ha modificado la valoración del contenido " + nameOfContent + " a " + preference);
 			} else {
 				LOGGER.info("El usuario " + UserDB.getnameOfUser(userId) + " añade un valoración de " + preference
 						+ " al contenido " + nameOfContent);
 			}
-			jDBCDataModel.setPreference(userId, contentId, preference);
+			myRecommender.setPreference(userId, contentId, preference);
 			out.print("ok");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -375,7 +314,7 @@ public class NoticiasTVi extends HttpServlet {
 			String nameOfContent = ContentDB.getTitleOfContent(contentId);
 			if (userId != null && contentId != null) {
 				if (PreferenceDB.userHaveContent(userId, contentId)) {
-					jDBCDataModel.removePreference(contentId, userId);
+					myRecommender.removePreference(contentId, userId);
 					LOGGER.info("Eliminamos la valoración del usuario " + UserDB.getnameOfUser(userId)
 							+ " para el contenido " + nameOfContent);
 				}
@@ -461,7 +400,7 @@ public class NoticiasTVi extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			if (userId != null) {
 				LOGGER.info("Los contenidos valorados por el usuario " + UserDB.getnameOfUser(userId) + " son:");
-				PreferenceArray preferencesUser = jDBCDataModel.getPreferencesFromUser(userId);
+				PreferenceArray preferencesUser = myRecommender.getPreferencesFromUser(userId);
 				for (int i = 0; i < preferencesUser.length(); i++) {
 					have = "1";
 					String content = ContentDB.getTitleOfContent(preferencesUser.getItemID(i));
@@ -510,7 +449,7 @@ public class NoticiasTVi extends HttpServlet {
 			if (userId != null) {
 				if (PreferenceDB.userHaveContent(userId, contentId)) {
 					out.print("[");
-					float rating = jDBCDataModel.getPreferenceValue(userId, contentId);
+					float rating = myRecommender.getPreferenceValue(userId, contentId);
 					LOGGER.info("La valoraci??n al contenido " + ContentDB.getTitleOfContent(contentId)
 							+ " por el usuario " + UserDB.getnameOfUser(userId) + " es:" + rating);
 					out.print(rating);
@@ -553,7 +492,7 @@ public class NoticiasTVi extends HttpServlet {
 				while (ContentDB.getTitleOfContent(contentId) == "") {
 					contentId = (long) (random.nextDouble() * num);
 				}
-				if (jDBCDataModel.getPreferenceValue(userId, contentId) != null)
+				if (myRecommender.getPreferenceValue(userId, contentId) != null)
 					rate = "1";
 
 				Noticia not = new Noticia(Long.toString(contentId), ContentDB.getTitleOfContent(contentId),
