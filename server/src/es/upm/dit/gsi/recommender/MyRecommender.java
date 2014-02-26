@@ -77,7 +77,7 @@ public class MyRecommender {
 
 	
 	private boolean shouldUseUserBased(long userId) {
-		boolean should =  userId%2==0;
+		boolean should = userId%2==0;
 		System.out.println("Using user based content: " + should);
 		return should;
 	}

@@ -1,15 +1,12 @@
-# noticiastvi
+# noticias-tvi
 
-This is a content recommendation system that shows video news.
+This is a content recommendation system that shows video news based on your preferences.
 
-There is two parts: a server that manages the videos, users and recommendations and a Google TV application that allows users to watch the videos and save the ones that they like.
+It has two parts: a server that manages the videos, users and recommendations and a Google TV application that shows the videos and interacts with the server.
 
 ## Authors 
 
-- Google TV application developed by [Antonio Prada](https://github.com/toniprada).
-- Server developed by [Adriano Martín](https://github.com/adri87).
-
-Developed at [GSI-UPM (Intelligents Systems Group)](http://www.gsi.dit.upm.es/).
+Developed by [Antonio Prada](https://github.com/toniprada) and [Adriano Martín](https://github.com/adri87) at [GSI-UPM (Intelligents Systems Group)](http://www.gsi.dit.upm.es/).
   
 ## License 
 

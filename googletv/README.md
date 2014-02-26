@@ -1,4 +1,4 @@
-# noticiastvi-googletv
+# noticias-tvi-googletv
 
 This is the GoogleTV application for the NoticiasTVi project. 
 
