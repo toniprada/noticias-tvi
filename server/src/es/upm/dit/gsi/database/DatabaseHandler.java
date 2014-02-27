@@ -13,12 +13,6 @@ public class DatabaseHandler {
 	private Connection dbCon;
 	private MySQLDataSource dataSource;
 	private static DatabaseHandler conf;
-	public static String driver = "org.mariadb.jdbc.Driver";
-	public static String servername = "demos.gsi.dit.upm.es";
-	public static String dbname = "tprada";
-	public static String user = "toni";
-	public static String pass = "m4r14DB!TONI";	
-	public static String url = "jdbc:mysql://" + servername + ":3306/" + dbname;
 
 	
 	private static final Logger LOGGER = Logger.getLogger("connection.Configuration");
