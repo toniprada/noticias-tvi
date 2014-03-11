@@ -1,5 +1,5 @@
 //   Copyright 2011 UPM-GSI: Group of Intelligent Systems -
-//   - Universidad Politécnica de Madrid (UPM)
+//   - Universidad Polit��cnica de Madrid (UPM)
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -26,12 +26,7 @@ public class Constant {
 //	public static final String TITLE = "title";
 	
 	public static final boolean TEST = false;
-	public static final String SERVER_URL = "http://10.0.2.2:8080/Recommender/noticias";
-//	public static final String SERVER_URL = "http://138.4.3.241:8080/Recommender/noticias"; yo
-//	public static final String SERVER_URL = "http://lab.gsi.dit.upm.es/apps/NoticiasTVi/noticias"; shannon
-
-	   
-
-	
+//	public static final String SERVER_URL = "http://10.0.2.2:8080/Recommender/noticias";
+	public static final String SERVER_URL = "http://demos.gsi.dit.upm.es/tomcat/RecommenderNoticiasTVi/noticias";
 
 }

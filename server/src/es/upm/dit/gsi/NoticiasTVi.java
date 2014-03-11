@@ -51,7 +51,6 @@ public class NoticiasTVi extends HttpServlet {
 	private static final Logger LOGGER = Logger.getLogger("servlet.Mahout");
 
 
-	public DatabaseHandler databaseHandler;
 	public MyRecommender myRecommender;
 	
 	public Gson gson;
@@ -62,7 +61,6 @@ public class NoticiasTVi extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		gson = new Gson();
-		databaseHandler = DatabaseHandler.getInstance();
 		myRecommender = new MyRecommender();
 	}
 

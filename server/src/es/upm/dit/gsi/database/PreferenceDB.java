@@ -3,14 +3,14 @@ package es.upm.dit.gsi.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Vector;
+
 //import es.upm.dit.gsi.h2.Configuration;
 import es.upm.dit.gsi.logger.Logger;
 
 public class PreferenceDB {
-	private static DatabaseHandler conf = DatabaseHandler.getInstance();
-	private static Connection con = conf.getDbCon();
 
 	private static final Logger LOGGER = Logger.getLogger("jdbc.Preference");
 
@@ -22,10 +22,12 @@ public class PreferenceDB {
 	 * @return true or false
 	 */
 	public static boolean userHaveContent(Long userId, Long contentId) {
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
+
 			String selectStatement = "SELECT preference FROM preferenceTable WHERE user_id = ? AND content_id = ?";
-			PreparedStatement prepStmt = (PreparedStatement) con
-					.prepareStatement(selectStatement);
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			prepStmt.setLong(1, userId);
 			prepStmt.setLong(2, contentId);
 			ResultSet res = prepStmt.executeQuery();
@@ -35,6 +37,13 @@ public class PreferenceDB {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		LOGGER.info("El usuario no ha puntado este contenido");
 		return false;
@@ -49,10 +58,12 @@ public class PreferenceDB {
 	 */
 	public static Integer userRateToContent(Long userId, Long contentId) {
 		int preference = 0;
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
+
 			String selectStatement = "SELECT preference FROM preferenceTable WHERE user_id = ? AND content_id = ?";
-			PreparedStatement prepStmt = (PreparedStatement) con
-					.prepareStatement(selectStatement);
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			prepStmt.setLong(1, userId);
 			prepStmt.setLong(2, contentId);
 			ResultSet res = prepStmt.executeQuery();
@@ -61,6 +72,13 @@ public class PreferenceDB {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return preference;
 	}
@@ -72,15 +90,24 @@ public class PreferenceDB {
 	 */
 	public static int numberOfRatedContents() {
 		int num_contents = 0;
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
+
 			String selectStatement = "SELECT DISTINCT content_id FROM preferenceTable";
-			PreparedStatement prepStmt = (PreparedStatement) con
-					.prepareStatement(selectStatement);
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			ResultSet res = prepStmt.executeQuery();
 			while (res.next())
 				num_contents++;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return num_contents;
 	}
@@ -92,10 +119,12 @@ public class PreferenceDB {
 	 */
 	public static Vector<Long> RatedContentsOfUser(long userId) {
 		Vector<Long> contentsRatedIds = new Vector<Long>();
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
+
 			String selectStatement = "SELECT content_id FROM preferenceTable WHERE user_id=?";
-			PreparedStatement prepStmt = (PreparedStatement) con
-					.prepareStatement(selectStatement);
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			prepStmt.setLong(1, userId);
 			ResultSet res = prepStmt.executeQuery();
 			while (res.next()) {
@@ -103,6 +132,13 @@ public class PreferenceDB {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return contentsRatedIds;
 	}
@@ -114,10 +150,12 @@ public class PreferenceDB {
 	 */
 	public static HashMap<Long, Float> averageRatings() {
 		HashMap<Long, Float> avRatings = new HashMap<Long, Float>();
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
+
 			String selectStatement = "SELECT DISTINCT content_id FROM preferenceTable";
-			PreparedStatement prepStmt = (PreparedStatement) con
-					.prepareStatement(selectStatement);
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			ResultSet res = prepStmt.executeQuery();
 			while (res.next()) {
 				long id = res.getLong("content_id");
@@ -127,6 +165,13 @@ public class PreferenceDB {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return avRatings;
 	}
@@ -140,10 +185,11 @@ public class PreferenceDB {
 	public static float getAverageRating(long contentId) {
 		int times = 0;
 		float totalRating = 0;
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
 			String selectStatement = "SELECT preference FROM preferenceTable WHERE content_id=?";
-			PreparedStatement prepStmt = (PreparedStatement) con
-					.prepareStatement(selectStatement);
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			prepStmt.setLong(1, contentId);
 			ResultSet res = prepStmt.executeQuery();
 			while (res.next()) {
@@ -152,6 +198,13 @@ public class PreferenceDB {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		float average = totalRating / times;
 		return average;
@@ -166,10 +219,12 @@ public class PreferenceDB {
 	 */
 	public static int numVoteOfContent(long contentId) {
 		int numVotes = 0;
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
+
 			String selectStatement = "SELECT preference FROM preferenceTable WHERE content_id=?";
-			PreparedStatement prepStmt = (PreparedStatement) con
-					.prepareStatement(selectStatement);
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			prepStmt.setLong(1, contentId);
 			ResultSet res = prepStmt.executeQuery();
 			while (res.next()) {
@@ -177,6 +232,14 @@ public class PreferenceDB {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return numVotes;
 	}
@@ -188,15 +251,25 @@ public class PreferenceDB {
 	 * @param contentId
 	 */
 	public static void removePreferencesUser(long userId) {
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
+
 			String selectStatement = "DELETE FROM preferenceTable WHERE user_id=?";
-			PreparedStatement prepStmt = (PreparedStatement) con
-					.prepareStatement(selectStatement);
+			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			prepStmt.setLong(1, userId);
 			prepStmt.execute();
 			LOGGER.info("Se han eliminado todas las valoraciones que hab??a realizado el usuario");
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

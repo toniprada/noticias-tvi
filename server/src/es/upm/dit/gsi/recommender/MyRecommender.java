@@ -27,7 +27,6 @@ public class MyRecommender {
 	private static final Logger LOGGER = Logger.getLogger("Recommmender");
 
 	
-	public DatabaseHandler databaseHandler;
 
 	private JDBCDataModel dataModel;
 	// User based
@@ -39,8 +38,7 @@ public class MyRecommender {
 	private Recommender contentBasedrecommender;
 
 	public MyRecommender() {
-		databaseHandler = DatabaseHandler.getInstance();
-		dataModel = new MySQLJDBCDataModel(databaseHandler.getDataSource(), "preferenceTable", "user_id", "content_id", "preference", null);
+		dataModel = new MySQLJDBCDataModel(new DatabaseHandler().getDataSource(), "preferenceTable", "user_id", "content_id", "preference", null);
 		LOGGER.info("datamodel es " + dataModel);
 		try {
 			// User based

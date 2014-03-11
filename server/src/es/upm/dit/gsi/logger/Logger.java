@@ -54,7 +54,7 @@ public class Logger {
 
     private static final Map<String, Logger> loggers = new HashMap<String, Logger>();
     private static final Properties properties = new Properties();
-    private static int default_console_level = INFO;
+    private static int default_console_level = OFF;
     private static PrintStream console = System.err;
 
     private String name;

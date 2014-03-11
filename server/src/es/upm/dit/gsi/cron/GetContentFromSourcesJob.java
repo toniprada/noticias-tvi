@@ -42,7 +42,6 @@ public class GetContentFromSourcesJob implements Job {
 				Date date = entry.getPublishedDate();
 				long time = date.getTime();
 				String content = entry.getDescription().getValue();
-				System.out.println(content);
 				String capture = "";
 				String video = "";
 				@SuppressWarnings("unchecked")

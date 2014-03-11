@@ -4,12 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+
+
+
+
+import java.sql.SQLException;
+
+
+
+
+
 //import es.upm.dit.gsi.h2.Configuration;
 import es.upm.dit.gsi.logger.Logger;
 
 public class UserDB {
-	private static DatabaseHandler conf = DatabaseHandler.getInstance();
-	private static Connection con = conf.getDbCon();
 
 	private static final Logger LOGGER = Logger.getLogger("jdbc.Users");
 	
@@ -23,8 +31,9 @@ public class UserDB {
 	 */
 	public static long introduceUser (String nameOfUser){
 		Long userId=null;
-
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
 			String selectStatement = "SELECT id FROM users WHERE identifier = ? ";
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 	    	prepStmt.setString(1, nameOfUser);
@@ -55,7 +64,14 @@ public class UserDB {
 	    
 		} catch (Exception e) {
 	    	e.printStackTrace();
-	    } 
+	    } finally {
+			try {
+				if (con != null) con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return userId;
 	}
 	
@@ -65,7 +81,9 @@ public class UserDB {
 	 * @param nameOfUser
 	 */
 	public static void removeUser (Long userId){
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
 			String selectStatement = "DELETE FROM users WHERE id=?";
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 			prepStmt.setLong(1, userId);
@@ -73,7 +91,14 @@ public class UserDB {
 	    		LOGGER.info("Se ha dado de baja el usuario: "+getnameOfUser(userId));
 	    } catch (Exception e) {
 	    	e.printStackTrace();
-	    }
+	    } finally {
+			try {
+				if (con != null) con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
@@ -84,8 +109,10 @@ public class UserDB {
 	 */
 	public static Long getUserId (String nameOfUser) {
 		Long userId=null;
-
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
+
 			String selectStatement = "SELECT id FROM users WHERE identifier = ? ";
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 	    	prepStmt.setString(1, nameOfUser);
@@ -99,7 +126,14 @@ public class UserDB {
 	    
 	    } catch (Exception e) {
 	    	e.printStackTrace();
-	    }
+	    } finally {
+			try {
+				if (con != null) con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return userId;
 	}
 	
@@ -112,8 +146,10 @@ public class UserDB {
 	 */
 	public static String getnameOfUser(Long userId) {
 		String nameOfUser="";
-
+		Connection con = null;
 		try {
+			con = new DatabaseHandler().getCon();
+
 			String selectStatement = "SELECT identifier FROM users WHERE id = ? ";
 			PreparedStatement prepStmt = (PreparedStatement) con.prepareStatement(selectStatement);
 	    	prepStmt.setLong(1, userId);
@@ -128,7 +164,14 @@ public class UserDB {
 	    
 	    } catch (Exception e) {
 	    	e.printStackTrace();
-	    }
+	    } finally {
+			try {
+				if (con != null) con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return nameOfUser;
 	}
 }
